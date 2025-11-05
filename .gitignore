@@ -49,3 +49,6 @@ vitest.config.*.timestamp*
 **/bin/
 **/obj/
 /artifacts/
+
+#Verdaccio
+htpasswd
