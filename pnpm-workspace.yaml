@@ -13,3 +13,6 @@ onlyBuiltDependencies:
   - esbuild
   - nx
   - unrs-resolver
+
+overrides:
+  vite: "npm:rolldown-vite@latest"

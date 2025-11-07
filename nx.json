@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "pnpm": ["10.20.0"],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",

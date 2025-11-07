@@ -16,7 +16,7 @@
     }
   },
   "files": [
-    "dist",
+    "dist/**",
     "!**/*.tsbuildinfo"
   ],
   "publishConfig": {

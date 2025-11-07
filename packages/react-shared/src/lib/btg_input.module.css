@@ -1,0 +1,36 @@
+.inputRoot {
+  display: block;
+  padding-inline: 1rem;
+  position: relative;
+}
+
+.inputLabel {
+  margin-block: 0.5rem;
+  position: absolute;
+  top: -18px;
+  left: 27px;
+  border-radius: 6px;
+  background: #101010;
+  font-size: 1rem;
+  padding-inline: 0.25rem;
+}
+
+.inputControl {
+  border-radius: 12px;
+  line-height: 2rem;
+  border: 2px solid transparent;
+  color: black;
+  font-size: 1.5rem;
+  padding-block: 0.5rem;
+  padding-inline: 0.25rem;
+}
+
+.inpurError {
+  margin-inline-start: 1rem;
+  margin-block-start: 0.25rem;
+}
+
+.error {
+  color: red;
+  font-size: small;
+}

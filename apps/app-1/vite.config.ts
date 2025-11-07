@@ -14,15 +14,15 @@ export default defineConfig(() => ({
     host: 'localhost',
   },
 
+  experimental: {
+    enableNativePlugin: true,
+  },
+
   css: {
     modules: {
-      auto: true,
-      exportGlobals: true,
       localsConvention: 'camelCase' as const,
     },
-  },
-  optimizeDeps: {
-    exclude: ['@btg/shared-ui'],
+    transformer: 'lightningcss' as const,
   },
 
   plugins: [react()],

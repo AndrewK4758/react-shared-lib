@@ -16,12 +16,16 @@ export default defineConfig(() => ({
   ],
 
   css: {
+    devSourcemap: true,
     modules: {
-      auto: true,
       localsConvention: 'camelCase' as const,
-      exportGlobals: true,
     },
+    transformer: 'lightningcss' as const,
   },
+  experimental: {
+    enableNativePlugin: true,
+  },
+
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [],
@@ -31,6 +35,7 @@ export default defineConfig(() => ({
   build: {
     outDir: './dist',
     emptyOutDir: true,
+    sourcemap: true,
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
@@ -46,8 +51,7 @@ export default defineConfig(() => ({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
-      experimentalLogSideEffects: true,
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'react-router'],
     },
   },
   test: {
