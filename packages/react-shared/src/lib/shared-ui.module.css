@@ -1,7 +1,8 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.fieldsetRoot {
+  font-size: '1.5rem';
+  padding-block: '0.75rem';
+  padding-inline: '0.5rem';
+  border: '1px solid';
+  border-radius: '12px';
+  position: 'relative';
+}

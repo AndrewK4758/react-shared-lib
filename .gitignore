@@ -52,3 +52,4 @@ vitest.config.*.timestamp*
 
 #Verdaccio
 htpasswd
+test-output

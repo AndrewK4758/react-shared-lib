@@ -51,7 +51,13 @@
         "watchDepsTargetName": "watch-deps"
       }
     },
-    "@nx/dotnet"
+    "@nx/dotnet",
+    {
+      "plugin": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e"
+      }
+    }
   ],
   "targetDefaults": {
     "test": {
@@ -66,7 +72,18 @@
   "generators": {
     "@nx/react": {
       "library": {
+        "style": "css",
+        "linter": "eslint",
         "unitTestRunner": "vitest"
+      },
+      "application": {
+        "babel": true,
+        "style": "css",
+        "linter": "eslint",
+        "bundler": "vite"
+      },
+      "component": {
+        "style": "css"
       }
     }
   }

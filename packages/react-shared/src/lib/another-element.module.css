@@ -1,7 +1,4 @@
-/*
- * Replace this with your own classes
- *
- * e.g.
- * .container {
- * }
-*/
+.wrapper {
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+}

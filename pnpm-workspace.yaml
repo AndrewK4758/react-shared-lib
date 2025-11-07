@@ -1,4 +1,15 @@
 packages:
-  - 'packages/*'
-  - 'packages'
+  - packages/*
+  - packages
+  - apps/*
+
 autoInstallPeers: true
+
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - '@swc/core'
+  - detox
+  - dtrace-provider
+  - esbuild
+  - nx
+  - unrs-resolver

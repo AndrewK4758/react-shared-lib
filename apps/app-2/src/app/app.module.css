@@ -1,0 +1,7 @@
+/* Your styles goes here. */
+.appStyles {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 480px;
+}
