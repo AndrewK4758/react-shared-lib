@@ -50,3 +50,11 @@
 ##### Plugins (not all)
 
 [plugins](https://nx.dev/docs/plugin-registry)
+
+
+### How to use 
+
+ - Install Nx VsCode plugin
+ - Open the package.json of the lib or app and abouve the "nx" property field there will be options that appear that handle and explain all aspects of the build/publish process
+ - Run the local verdaccio server is ```nx run local-registry``` and open the localhost link, then follow 3 onscreen instructions to add user to npm registry, publish, and download and use
+ - Please feel free to reach out to me to go over this in more detail
