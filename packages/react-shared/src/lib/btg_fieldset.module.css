@@ -1,18 +1,15 @@
-.wrapper {
-  padding-block: 1.25rem 0.75rem;
-  padding-inline: 0.5rem;
-}
+
 
 .fieldsetRoot {
   font-size: 1.5rem;
-  padding-block: 1.5rem;
+  padding-block: 1.5rem 1rem;
   padding-inline: 0.5rem;
   border: 1px solid transparent;
   border-radius: 12px;
   position: relative;
-  display: flex;
+  display: grid;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .fieldsetLegend {

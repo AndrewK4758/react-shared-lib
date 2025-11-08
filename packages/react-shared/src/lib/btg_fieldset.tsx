@@ -6,7 +6,7 @@ interface BtgFieldsetProps<T> extends HTMLAttributes<HTMLInputElement> {
   fieldLabel: string;
   //Can explicitly pass in or just use the default react children property
   //I am choosing to explicity pass the element in
-  InputElement: ReactElement<T> | ReactElement<T>[];
+  InputElement?: ReactElement<T> | ReactElement<T>[];
 }
 
 export function BtgFieldset<T>({
@@ -15,17 +15,15 @@ export function BtgFieldset<T>({
   ...props
 }: BtgFieldsetProps<T>) {
   return (
-    <div className={styles['wrapper']}>
-      <Fieldset.Root className={styles['fieldsetRoot']} style={props.style}>
-        <Fieldset.Legend
-          className={styles['fieldsetLegend']}
-          style={{ color: props.style?.color }}
-        >
-          {fieldLabel}
-        </Fieldset.Legend>
-        {InputElement}
-      </Fieldset.Root>
-    </div>
+    <Fieldset.Root className={styles['fieldsetRoot']} style={props.style}>
+      <Fieldset.Legend
+        className={styles['fieldsetLegend']}
+        style={{ color: props.style?.color }}
+      >
+        {fieldLabel}
+      </Fieldset.Legend>
+      {InputElement}
+    </Fieldset.Root>
   );
 }
 

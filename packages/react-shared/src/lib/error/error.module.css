@@ -1,0 +1,14 @@
+.inputError {
+  margin-inline-start: 1rem;
+  margin-block-start: 0.125rem;
+  height: 22px;
+}
+
+span {
+  all:unset;
+}
+
+.error {
+  color: red;
+  font-size: small;
+}
