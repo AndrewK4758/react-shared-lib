@@ -7,7 +7,6 @@ interface BtgErrorProps {
 }
 
 export const BtgError = memo(function ({ touched, error }: BtgErrorProps) {
-  console.log(touched, error);
   return (
     <div className={styles['inputError']}>
       {touched && error && (
