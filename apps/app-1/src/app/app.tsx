@@ -6,13 +6,14 @@ import {
 import '@btg/shared-ui/styles';
 import { FormikProvider, useFormik } from 'formik';
 import { useMemo, type FocusEvent, type FormEvent } from 'react';
+import { useRouteLoaderData } from 'react-router';
 import styles from './app.module.css';
 
 /**
  *
  * Add more types and properties to the type/objejct combo
  */
-type FormikFormProps = {
+export type FormikFormProps = {
   person: {
     id: string;
     name: string;
@@ -30,29 +31,12 @@ type FormikFormProps = {
   };
 };
 
-const initialValues: FormikFormProps = {
-  person: {
-    id: '',
-    name: '',
-    nickname: '',
-  },
-  place: {
-    address: '',
-    city: '',
-    state: '',
-    zip: '',
-    car: {
-      make: '',
-      model: '',
-    },
-  },
-};
-
 // STYLES ARE FAIRLY STATIC GRID, WAS MORE FOCUSED ON THE FORM SINCE THAT IS WHAT WE USE THE MOST, WE CAN USE THE BTG RENDER TREE AS A BASE FUNCTION AND ACCORDING TO TYPES OR NEEDS SWAP OUT THE FUNCTIONS NECESSARY
 
 //THIS IS WHAT I MEAN BY REUSEABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
 
 export function App() {
+  const initialValues = useRouteLoaderData('app');
   const formik = useFormik<FormikFormProps>({
     initialValues: initialValues,
     onSubmit: (values) => {
@@ -68,7 +52,10 @@ export function App() {
 
   //Import the model from db and render the objects according to what is added to db.
   //The data controls the ui, we just set up the environment for it to exist and communicate
-  const formTree = useMemo(() => transformObjectToFormTree(initialValues), []);
+  const formTree = useMemo(
+    () => transformObjectToFormTree(initialValues),
+    [initialValues],
+  );
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -79,8 +66,7 @@ export function App() {
     <div
       style={{
         backgroundColor: '#101010',
-        height: '100vh',
-        overflow: 'hidden',
+        minHeight: '100vh',
       }}
     >
       <FormikProvider value={formik}>
@@ -90,9 +76,7 @@ export function App() {
           onReset={() => formik.resetForm()}
           encType="application/json"
           style={{
-            border: '2px solid brown',
-            height: '100%',
-            paddingBlock: '3rem 0',
+            paddingBlock: '3rem 1rem',
             paddingInline: '5rem',
           }}
         >
@@ -100,11 +84,34 @@ export function App() {
             <BtgRenderTree<FormikFormProps>
               nodes={formTree}
               formik={formik}
-              formStyles={{ color: 'azure', borderColor: 'azure' }}
+              StyleOverrides={{
+                Fieldset: {
+                  Root: {
+                    display: 'flex',
+                    borderColor: 'azure',
+                    flex: '0 1 46%',
+                    maxHeight: 'fit-content',
+                  },
+                  Legend: {
+                    color: 'azure',
+                  },
+                },
+                Input: {
+                  Root: {
+                    maxHeight: 'fit-content',
+                  },
+                  Label: {
+                    color: 'GrayText',
+                  },
+                },
+              }}
             />
             <BtgFieldset
               fieldLabel="Actions"
-              style={{ color: 'azure', borderColor: 'azure' }}
+              StyleOverrides={{
+                Root: { flex: '1 0 100%' },
+                Legend: { color: 'azure', borderColor: 'azure' },
+              }}
               InputElement={
                 <div style={{ display: 'flex' }}>
                   <div>

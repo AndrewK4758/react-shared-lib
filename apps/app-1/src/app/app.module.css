@@ -1,13 +1,7 @@
 .appStyles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 2rem;
-  grid-template-rows: 1fr auto;
-  row-gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  
 }
 
-@media (max-width: 1024px) {
-  .appStyles {
-    grid-template-columns: 1fr;
-  }
-}

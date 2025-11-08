@@ -10,57 +10,54 @@ import {
   type ReactElement,
   type Ref,
 } from 'react';
+import type { BtgInputStyles } from '../types/types';
 import styles from './btg_input.module.css';
 import BtgError from './error/error';
 
-interface BtgInputProps<T> extends ComponentPropsWithRef<'input'> {
+interface BtgInputProps<T>
+  extends ComponentPropsWithRef<Exclude<'input', 'style'>> {
   label: string;
-  formKey: Extract<keyof T, string>;
+  name: Extract<keyof T, string>;
   formik: FormikProps<T>;
-  customClick?: (...args: unknown[]) => void;
-  customBlur?: (...args: unknown[]) => void;
+  StyleOverrides?: BtgInputStyles;
 }
 
 const BtgInputImplementation = memo(
   forwardRef(function <T>(
-    {
-      label,
-      formKey,
-      formik,
-      customBlur,
-      customClick,
-      ...props
-    }: BtgInputProps<T>,
+    { label, name, formik, StyleOverrides, ...props }: BtgInputProps<T>,
     ref?: Ref<HTMLInputElement> | undefined,
   ) {
-    const { name, value, onBlur, onChange } =
-      formik.getFieldProps<Extract<T[keyof T], string>>(formKey);
+    const passedOnChange = props.onChange;
+    const passedOnBlur = props.onBlur;
 
-    const touched = formik.touched[formKey] as boolean;
-    const error = formik.errors[formKey] as string;
+    const { value, onBlur, onChange } =
+      formik.getFieldProps<Extract<T[keyof T], string>>(name);
+
+    const touched = formik.touched[name] as boolean;
+    const error = formik.errors[name] as string;
 
     const handleChange = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
         onChange(event);
-        customClick && customClick();
+        passedOnChange && passedOnChange(event);
       },
-      [onChange, customClick],
+      [onChange, passedOnChange],
     );
 
     const handleBlur = useCallback(
       (event: FocusEvent<HTMLInputElement>) => {
         onBlur(event);
-        customBlur && customBlur();
+        passedOnBlur && passedOnBlur(event);
       },
-      [onBlur, customBlur],
+      [onBlur, passedOnBlur],
     );
 
     return (
-      <Field.Root className={styles['inputRoot']}>
+      <Field.Root className={styles['inputRoot']} style={StyleOverrides?.Root}>
         <Field.Label
-          htmlFor={`${formKey}-input-id`}
-          className={styles['formKey']}
-          style={{ color: props.style?.color }}
+          htmlFor={`${name}-input-id`}
+          className={styles['name']}
+          style={StyleOverrides?.Label}
         >
           {label}
         </Field.Label>
@@ -68,15 +65,19 @@ const BtgInputImplementation = memo(
           className={styles['inputControl']}
           ref={ref}
           {...props}
-          id={`${formKey}-input-id`}
+          id={`${name}-input-id`}
           name={name}
           value={value ?? ''}
           onChange={handleChange}
           onBlur={handleBlur}
-          style={{ ...props.style, color: 'black' }}
+          style={StyleOverrides?.Control}
         />
 
-        <BtgError touched={touched} error={error} />
+        <BtgError
+          touched={touched}
+          error={error}
+          style={StyleOverrides?.Error}
+        />
       </Field.Root>
     );
   }),

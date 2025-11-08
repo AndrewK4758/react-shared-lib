@@ -1,16 +1,24 @@
-import { memo } from 'react';
+import { memo, type HTMLAttributes } from 'react';
 import styles from './error.module.css';
 
-interface BtgErrorProps {
+interface BtgErrorProps extends HTMLAttributes<HTMLSpanElement> {
   touched: boolean;
   error: string | undefined;
 }
 
-export const BtgError = memo(function ({ touched, error }: BtgErrorProps) {
+export const BtgError = memo(function ({
+  touched,
+  error,
+  ...props
+}: BtgErrorProps) {
   return (
     <div className={styles['inputError']}>
       {touched && error && (
-        <span className={styles['error']}>{`ERROR: ${error}`}</span>
+        <span
+          {...props}
+          className={styles['error']}
+          style={props.style}
+        >{`ERROR: ${error}`}</span>
       )}
     </div>
   );

@@ -1,5 +1,5 @@
 import type { FormikProps } from 'formik';
-import type { CSSProperties } from 'react';
+import type { BtgRenderTreeStyles } from '../../types/types';
 import type { FormNode } from '../../utils/btg_form_tree_traversal';
 import {
   formatFieldNode,
@@ -18,7 +18,7 @@ interface RecursiveFormProps<T> {
   nodes: FormNode[];
   formik: FormikProps<T>;
   path?: string;
-  formStyles?: CSSProperties;
+  StyleOverrides?: BtgRenderTreeStyles;
 }
 
 /**
@@ -31,7 +31,7 @@ export function BtgRenderTree<T extends object>({
   nodes,
   formik,
   path = '',
-  formStyles,
+  StyleOverrides,
 }: RecursiveFormProps<T>) {
   const Tree = nodes.map((node) => {
     switch (node.type) {
@@ -40,16 +40,16 @@ export function BtgRenderTree<T extends object>({
         const currentPath = path ? `${path}.${node.label}` : node.label;
 
         return (
-          <BtgFieldset
+          <BtgFieldset<T>
             key={sectionLabel}
             fieldLabel={sectionLabel}
-            style={formStyles}
+            StyleOverrides={StyleOverrides?.Fieldset}
             InputElement={
               <BtgRenderTree
                 nodes={node.children}
                 formik={formik}
                 path={currentPath}
-                formStyles={formStyles}
+                StyleOverrides={StyleOverrides}
               />
             }
           />
@@ -64,9 +64,9 @@ export function BtgRenderTree<T extends object>({
           <BtgInput<T>
             key={fieldName}
             label={fieldLabel}
-            formKey={fieldName as Extract<keyof T, string>}
+            name={fieldName as Extract<keyof T, string>}
             formik={formik}
-            style={formStyles}
+            StyleOverrides={StyleOverrides?.Input}
           />
         );
       }
