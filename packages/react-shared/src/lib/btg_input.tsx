@@ -13,7 +13,7 @@ import {
 import type { BtgInputStyles } from '../types/types';
 import styles from './btg_input.module.css';
 import BtgError from './error/error';
-
+console.log(styles);
 interface BtgInputProps<T>
   extends ComponentPropsWithRef<Exclude<'input', 'style'>> {
   label: string;
@@ -48,6 +48,7 @@ const BtgInputImplementation = memo(
       (event: FocusEvent<HTMLInputElement>) => {
         onBlur(event);
         passedOnBlur && passedOnBlur(event);
+        console.log('blur for: ', event.currentTarget.name);
       },
       [onBlur, passedOnBlur],
     );
@@ -56,7 +57,7 @@ const BtgInputImplementation = memo(
       <Field.Root className={styles['inputRoot']} style={StyleOverrides?.Root}>
         <Field.Label
           htmlFor={`${name}-input-id`}
-          className={styles['name']}
+          className={styles['inputLabel']}
           style={StyleOverrides?.Label}
         >
           {label}

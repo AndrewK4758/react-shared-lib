@@ -174,14 +174,6 @@ importers:
 
   apps/app-1-e2e: {}
 
-  apps/app-2:
-    devDependencies:
-      '@btg/shared-ui':
-        specifier: workspace:*
-        version: link:../../packages/react-shared
-
-  apps/app-2-e2e: {}
-
   packages/react-shared: {}
 
 packages:

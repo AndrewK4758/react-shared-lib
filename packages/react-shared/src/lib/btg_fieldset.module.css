@@ -7,7 +7,7 @@
   border: 1px solid transparent;
   border-radius: 12px;
   position: relative;
-  display: grid;
+  display: flex;
   flex-direction: column;
   gap: 1rem;
 }

@@ -5,7 +5,7 @@ import {
 } from '@btg/shared-ui';
 import '@btg/shared-ui/styles';
 import { FormikProvider, useFormik } from 'formik';
-import { useMemo, type FocusEvent, type FormEvent } from 'react';
+import { useMemo, type FormEvent } from 'react';
 import { useRouteLoaderData } from 'react-router';
 import styles from './app.module.css';
 
@@ -18,6 +18,10 @@ export type FormikFormProps = {
     id: string;
     name: string;
     nickname: string;
+    parents: {
+      mom: string;
+      dad: string;
+    };
   };
   place: {
     address: string;
@@ -44,16 +48,10 @@ export function App() {
     },
   });
 
-  //Handled globally to the app level component
-  // eslint-disable-next-line react-hooks/immutability
-  formik.handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    console.log('blur', event.currentTarget.name);
-  };
-
   //Import the model from db and render the objects according to what is added to db.
   //The data controls the ui, we just set up the environment for it to exist and communicate
   const formTree = useMemo(
-    () => transformObjectToFormTree(initialValues),
+    () => transformObjectToFormTree<FormikFormProps>(initialValues),
     [initialValues],
   );
 
@@ -62,6 +60,7 @@ export function App() {
     formik.handleSubmit(event.currentTarget.values);
   };
 
+  console.log(formik.values);
   return (
     <div
       style={{
@@ -87,7 +86,7 @@ export function App() {
               StyleOverrides={{
                 Fieldset: {
                   Root: {
-                    display: 'flex',
+                    // display: 'flex',
                     borderColor: 'azure',
                     flex: '0 1 46%',
                     maxHeight: 'fit-content',

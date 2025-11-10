@@ -25,6 +25,10 @@ export default [
           id: '',
           name: '',
           nickname: '',
+          parents: {
+            mom: '',
+            dad: '',
+          },
         },
         place: {
           address: '',
