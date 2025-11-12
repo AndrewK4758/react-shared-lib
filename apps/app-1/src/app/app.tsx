@@ -2,6 +2,7 @@ import {
   BtgFieldset,
   BtgRenderTree,
   transformObjectToFormTree,
+  type FormStructure,
 } from '@btg/shared-ui';
 import '@btg/shared-ui/styles';
 import { FormikProvider, useFormik } from 'formik';
@@ -35,14 +36,19 @@ export type FormikFormProps = {
   };
 };
 
-// STYLES ARE FAIRLY STATIC GRID, WAS MORE FOCUSED ON THE FORM SINCE THAT IS WHAT WE USE THE MOST, WE CAN USE THE BTG RENDER TREE AS A BASE FUNCTION AND ACCORDING TO TYPES OR NEEDS SWAP OUT THE FUNCTIONS NECESSARY
+type ComponentStructure = {
+  values: FormikFormProps;
+  structure: FormStructure;
+};
+
+// WAS MORE FOCUSED ON THE FORM SINCE THAT IS WHAT WE USE THE MOST, WE CAN USE THE BTG RENDER TREE AS A BASE FUNCTION AND ACCORDING TO TYPES OR NEEDS SWAP OUT THE FUNCTIONS NECESSARY
 
 //THIS IS WHAT I MEAN BY REUSEABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
 
 export function App() {
-  const initialValues = useRouteLoaderData('app');
+  const { values, structure } = useRouteLoaderData('app') as ComponentStructure;
   const formik = useFormik<FormikFormProps>({
-    initialValues: initialValues,
+    initialValues: values,
     onSubmit: (values) => {
       console.log(values);
     },
@@ -51,8 +57,8 @@ export function App() {
   //Import the model from db and render the objects according to what is added to db.
   //The data controls the ui, we just set up the environment for it to exist and communicate
   const formTree = useMemo(
-    () => transformObjectToFormTree<FormikFormProps>(initialValues),
-    [initialValues],
+    () => transformObjectToFormTree<FormStructure>(structure),
+    [structure],
   );
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -60,12 +66,12 @@ export function App() {
     formik.handleSubmit(event.currentTarget.values);
   };
 
-  console.log(formik.values);
   return (
     <div
       style={{
         backgroundColor: '#101010',
         minHeight: '100vh',
+        width: '100%',
       }}
     >
       <FormikProvider value={formik}>
@@ -86,7 +92,6 @@ export function App() {
               StyleOverrides={{
                 Fieldset: {
                   Root: {
-                    // display: 'flex',
                     borderColor: 'azure',
                     flex: '0 1 46%',
                     maxHeight: 'fit-content',

@@ -36,6 +36,8 @@ export default defineConfig(() => ({
     outDir: './dist',
     emptyOutDir: true,
     sourcemap: true,
+    modulePreload: true,
+    minify: false,
     reportCompressedSize: true,
     commonjsOptions: {
       transformMixedEsModules: true,
@@ -54,6 +56,7 @@ export default defineConfig(() => ({
       external: ['react', 'react-dom', 'react/jsx-runtime'],
     },
   },
+
   test: {
     name: 'shared-ui',
     watch: false,

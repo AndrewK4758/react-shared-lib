@@ -39,6 +39,7 @@ export default defineConfig(() => ({
       transformMixedEsModules: true,
     },
   },
+
   test: {
     name: 'app-1',
     watch: false,

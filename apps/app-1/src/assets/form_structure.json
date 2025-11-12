@@ -1,0 +1,21 @@
+{
+  "person": {
+    "id": { "type": "text", "id": 1 },
+    "name": { "type": "text", "id": 1 },
+    "nickname": { "type": "text", "id": 1 },
+    "parents": {
+      "mom": { "type": "text", "id": 1 },
+      "dad": { "type": "text", "id": 1 }
+    }
+  },
+  "place": {
+    "address": { "type": "text", "id": 1 },
+    "city": { "type": "text", "id": 1 },
+    "state": { "type": "dropdown", "id": 2 },
+    "zip": { "type": "text", "id": 1 },
+    "car": {
+      "make": { "type": "dropdown", "id": 2 },
+      "model": { "type": "dropdown", "id": 2 }
+    }
+  }
+}

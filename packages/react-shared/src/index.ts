@@ -1,3 +1,6 @@
+export * from './lib/btg_dropdown';
+export * from './utils/form_input_builder';
+
 export * from './lib/btg_fieldset';
 export * from './lib/btg_input';
 export * from './lib/data_structures/tree';

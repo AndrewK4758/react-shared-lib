@@ -2,7 +2,6 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "baseUrl": ".",
     "lib": ["DOM"],
     "types": [
       "node",
@@ -14,7 +13,9 @@
     "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "bundler",
+    "target": "esnext",
     "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo"
+    // "verbatimModuleSyntax": true
   },
   "exclude": [
     "out-tsc",

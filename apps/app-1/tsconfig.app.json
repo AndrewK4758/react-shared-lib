@@ -13,7 +13,10 @@
     ],
     "rootDir": "src",
     "module": "esnext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "target": "esnext",
+    "resolveJsonModule": true
+    // "verbatimModuleSyntax": true
   },
   "exclude": [
     "out-tsc",
@@ -34,7 +37,13 @@
     "eslint.config.cjs",
     "eslint.config.mjs"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.json"
+  ],
   "references": [
     {
       "path": "../../packages/react-shared/tsconfig.lib.json"

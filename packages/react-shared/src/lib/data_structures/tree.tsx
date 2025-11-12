@@ -1,12 +1,9 @@
 import type { FormikProps } from 'formik';
 import type { BtgRenderTreeStyles } from '../../types/types';
 import type { FormNode } from '../../utils/btg_form_tree_traversal';
-import {
-  formatFieldNode,
-  formatSectionNode,
-} from '../../utils/format_nodes_to_labels';
+import FormInputBuilder from '../../utils/form_input_builder';
+import { formatSectionNode } from '../../utils/format_nodes_to_labels';
 import BtgFieldset from '../btg_fieldset';
-import BtgInput from '../btg_input';
 // import styles from './tree.module.css';
 
 const NodeType = Object.freeze({
@@ -57,18 +54,9 @@ export function BtgRenderTree<T extends object>({
       }
 
       case NodeType.Field: {
-        const fieldName = path ? `${path}.${node.name}` : node.name;
-        const fieldLabel = formatFieldNode(node);
+        const props = { node, path, formik, StyleOverrides };
 
-        return (
-          <BtgInput<T>
-            key={fieldName}
-            label={fieldLabel}
-            name={fieldName as Extract<keyof T, string>}
-            formik={formik}
-            StyleOverrides={StyleOverrides?.Input}
-          />
-        );
+        return FormInputBuilder(props);
       }
       default: {
         return null;

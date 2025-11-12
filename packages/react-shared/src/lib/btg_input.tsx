@@ -13,7 +13,7 @@ import {
 import type { BtgInputStyles } from '../types/types';
 import styles from './btg_input.module.css';
 import BtgError from './error/error';
-console.log(styles);
+
 interface BtgInputProps<T>
   extends ComponentPropsWithRef<Exclude<'input', 'style'>> {
   label: string;

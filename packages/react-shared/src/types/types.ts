@@ -10,7 +10,12 @@ export type BtgInputStyles = BtgCommonStyles<
   'Root' | 'Label' | 'Control' | 'Error'
 >;
 
+export type BtgDropDownStyles = BtgCommonStyles<
+  'Root' | 'GroupLabel' | 'Group' | 'List' | 'ItemText'
+>;
+
 export type BtgRenderTreeStyles = {
-  Fieldset: BtgFieldsetStyles;
-  Input: BtgInputStyles;
+  Fieldset?: BtgFieldsetStyles;
+  Input?: BtgInputStyles;
+  Dropdown?: BtgDropDownStyles;
 };
