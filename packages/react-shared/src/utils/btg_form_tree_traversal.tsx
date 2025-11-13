@@ -1,23 +1,10 @@
-export type FormNode = FieldNode | SectionNode;
-
-export type FieldNode = {
-  type: 'field';
-  name: string;
-  fieldType: 'text' | 'dropdown';
-  fieldId: number;
-};
-
-export type SectionNode = {
-  type: 'section';
-  label: string;
-  children: FormNode[];
-};
-
-export type FormField = { type: 'text' | 'dropdown'; id: number };
-
-export type FormStructure = {
-  [key: string]: FormField | FormStructure;
-};
+import type {
+  FieldNode,
+  FormField,
+  FormNode,
+  FormStructure,
+  SectionNode,
+} from '../types/types';
 
 /* Recursively transforms a state object into a tree of
  * FormNode objects for rendering.

@@ -1,4 +1,4 @@
-import type { FieldNode, SectionNode } from './btg_form_tree_traversal';
+import type { FieldNode, SectionNode } from '../types/types';
 
 export function formatFieldNode(node: FieldNode): string {
   const name = parseTableStringIntoLabel(node.name);

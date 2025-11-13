@@ -1,9 +1,15 @@
 import { Outlet, type RouteObject } from 'react-router';
 // import formStructure from '../assets/form_structure.json';
+import type { FormStructure } from '@btg/shared-ui';
 import App, { type FormikFormProps } from './app';
 import styles from './app.module.css';
 
-const formStructure = {
+const formStructure: FormStructure = {
+  newSection: {
+    one: { type: 'text', id: 0 },
+    two: { type: 'text', id: 1 },
+    three: { type: 'text', id: 1 },
+  },
   person: {
     id: { type: 'text', id: 1 },
     name: { type: 'text', id: 1 },
@@ -91,7 +97,7 @@ export default [
           // MOCK LOADING SELECT VALUES
 
           const selectValues = {
-            favoriteColors: [
+            favoriteColor: [
               { label: 'Red', value: 0 },
               { label: 'Blue', value: 1 },
               { label: 'Yellow', value: 2 },

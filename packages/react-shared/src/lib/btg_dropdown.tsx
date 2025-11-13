@@ -1,14 +1,9 @@
 import { Select } from '@base-ui-components/react/select';
 import { getIn, type FormikProps } from 'formik';
 import { Fragment, memo, useCallback, type ReactElement } from 'react';
-import type { BtgDropDownStyles } from '../types/types';
+import type { BtgDropDownStyles, OptionType } from '../types/types';
 import styles from './btg_dropdown.module.css';
 import BtgError from './error/error';
-
-export interface OptionType {
-  label: string;
-  value: number;
-}
 
 interface BtgDropDownProps<T, M extends boolean | undefined>
   extends Select.Root.Props<string | number, M> {

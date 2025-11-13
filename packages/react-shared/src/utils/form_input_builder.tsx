@@ -1,21 +1,8 @@
-import type { FormikProps } from 'formik';
-import BtgDropdown, { type OptionType } from '../lib/btg_dropdown';
+import BtgDropdown from '../lib/btg_dropdown';
 import BtgInput from '../lib/btg_input';
-import type { BtgRenderTreeStyles } from '../types/types';
-import type { FieldNode } from './btg_form_tree_traversal';
+import type { BaseFormProps, FieldNode } from '../types/types';
 // import styles from './form_input_builder.module.css';
 import { formatFieldNode } from './format_nodes_to_labels';
-
-export type OptionTypes = {
-  [key: string]: OptionType[];
-};
-
-export interface BaseFormProps<T> {
-  formik: FormikProps<T>;
-  path?: string;
-  selectOptions: OptionTypes;
-  StyleOverrides?: BtgRenderTreeStyles;
-}
 
 interface FormInputBuilderProps<T> extends BaseFormProps<T> {
   node: FieldNode;
