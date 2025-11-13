@@ -15,8 +15,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "target": "esnext",
-    "resolveJsonModule": true
-    // "verbatimModuleSyntax": true
+    "resolveJsonModule": true,
+    "verbatimModuleSyntax": true
   },
   "exclude": [
     "out-tsc",

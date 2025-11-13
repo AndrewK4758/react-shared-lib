@@ -1,4 +1,5 @@
 /// <reference types='vitest' />
+import { workspaceRoot } from '@nx/devkit';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
@@ -23,6 +24,13 @@ export default defineConfig(() => ({
       localsConvention: 'camelCase' as const,
     },
     transformer: 'lightningcss' as const,
+  },
+
+  resolve: {
+    alias: {
+      '@btg/shred-ui': `${workspaceRoot}/packages/react-shared/src/index.ts`,
+      '@btg/shred-ui/styles': `${workspaceRoot}/packages/react-shared/dist/index.css`,
+    },
   },
 
   plugins: [react()],

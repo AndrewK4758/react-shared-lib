@@ -1,4 +1,4 @@
-import { Field } from '@base-ui-components/react';
+import { Field } from '@base-ui-components/react/field';
 import type { FormikProps } from 'formik/dist/types';
 import {
   forwardRef,

@@ -19,9 +19,12 @@ export type FormikFormProps = {
     id: string;
     name: string;
     nickname: string;
+    favoriteColor: string;
     parents: {
       mom: string;
       dad: string;
+      bro: string;
+      sis: string;
     };
   };
   place: {
@@ -36,9 +39,20 @@ export type FormikFormProps = {
   };
 };
 
+interface OptionType {
+  label: string;
+  value: number;
+}
+
+// 2. Define the main type for the selectValues object
+export interface SelectValuesType {
+  [key: string]: OptionType[];
+}
+
 type ComponentStructure = {
   values: FormikFormProps;
   structure: FormStructure;
+  dropdown: SelectValuesType;
 };
 
 // WAS MORE FOCUSED ON THE FORM SINCE THAT IS WHAT WE USE THE MOST, WE CAN USE THE BTG RENDER TREE AS A BASE FUNCTION AND ACCORDING TO TYPES OR NEEDS SWAP OUT THE FUNCTIONS NECESSARY
@@ -46,7 +60,9 @@ type ComponentStructure = {
 //THIS IS WHAT I MEAN BY REUSEABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
 
 export function App() {
-  const { values, structure } = useRouteLoaderData('app') as ComponentStructure;
+  const { values, structure, dropdown } = useRouteLoaderData(
+    'app',
+  ) as ComponentStructure;
   const formik = useFormik<FormikFormProps>({
     initialValues: values,
     onSubmit: (values) => {
@@ -66,6 +82,7 @@ export function App() {
     formik.handleSubmit(event.currentTarget.values);
   };
 
+  console.log(formik.values);
   return (
     <div
       style={{
@@ -89,6 +106,7 @@ export function App() {
             <BtgRenderTree<FormikFormProps>
               nodes={formTree}
               formik={formik}
+              selectOptions={dropdown}
               StyleOverrides={{
                 Fieldset: {
                   Root: {
@@ -97,7 +115,7 @@ export function App() {
                     maxHeight: 'fit-content',
                   },
                   Legend: {
-                    color: 'azure',
+                    color: 'red',
                   },
                 },
                 Input: {
@@ -106,6 +124,18 @@ export function App() {
                   },
                   Label: {
                     color: 'GrayText',
+                  },
+                },
+                Dropdown: {
+                  Trigger: { border: '1px solid azure' },
+                  Label: { color: 'GrayText' },
+                  List: {
+                    borderColor: 'azure',
+                    borderRadius: '12px',
+                  },
+                  ItemText: {
+                    fontSize: '1rem',
+                    fontFamily: 'monospace',
                   },
                 },
               }}

@@ -14,8 +14,8 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "target": "esnext",
-    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo"
-    // "verbatimModuleSyntax": true
+    "tsBuildInfoFile": "dist/tsconfig.lib.tsbuildinfo",
+    "verbatimModuleSyntax": true
   },
   "exclude": [
     "out-tsc",

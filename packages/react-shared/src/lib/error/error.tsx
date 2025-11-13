@@ -2,7 +2,7 @@ import { memo, type HTMLAttributes } from 'react';
 import styles from './error.module.css';
 
 interface BtgErrorProps extends HTMLAttributes<HTMLSpanElement> {
-  touched: boolean;
+  touched: boolean | undefined;
   error: string | undefined;
 }
 

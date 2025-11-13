@@ -25,7 +25,9 @@ export default defineConfig(() => ({
   experimental: {
     enableNativePlugin: true,
   },
-
+  optimizeDeps: {
+    include: ['@base-ui-components/react', '@base-ui-components/utils'],
+  },
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [],
@@ -53,7 +55,13 @@ export default defineConfig(() => ({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        '@base-ui-components/react/select',
+        '@base-ui-components/utils',
+      ],
     },
   },
 

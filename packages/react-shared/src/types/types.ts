@@ -11,7 +11,14 @@ export type BtgInputStyles = BtgCommonStyles<
 >;
 
 export type BtgDropDownStyles = BtgCommonStyles<
-  'Root' | 'GroupLabel' | 'Group' | 'List' | 'ItemText'
+  | 'Wrapper'
+  | 'Trigger'
+  | 'Root'
+  | 'Label'
+  | 'GroupLabel'
+  | 'Group'
+  | 'List'
+  | 'ItemText'
 >;
 
 export type BtgRenderTreeStyles = {

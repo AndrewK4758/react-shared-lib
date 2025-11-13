@@ -15,8 +15,11 @@
       "default": "./dist/index.js"
     }
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
-    "dist/**",
+    "dist",
     "!**/*.tsbuildinfo"
   ],
   "publishConfig": {

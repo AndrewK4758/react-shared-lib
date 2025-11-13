@@ -1,7 +1,7 @@
-import type { FormikProps } from 'formik';
-import type { BtgRenderTreeStyles } from '../../types/types';
 import type { FormNode } from '../../utils/btg_form_tree_traversal';
-import FormInputBuilder from '../../utils/form_input_builder';
+import FormInputBuilder, {
+  type BaseFormProps,
+} from '../../utils/form_input_builder';
 import { formatSectionNode } from '../../utils/format_nodes_to_labels';
 import BtgFieldset from '../btg_fieldset';
 // import styles from './tree.module.css';
@@ -11,11 +11,8 @@ const NodeType = Object.freeze({
   Field: 'field',
 } as const);
 
-interface RecursiveFormProps<T> {
+export interface RecursiveFormProps<T> extends BaseFormProps<T> {
   nodes: FormNode[];
-  formik: FormikProps<T>;
-  path?: string;
-  StyleOverrides?: BtgRenderTreeStyles;
 }
 
 /**
@@ -28,6 +25,7 @@ export function BtgRenderTree<T extends object>({
   nodes,
   formik,
   path = '',
+  selectOptions,
   StyleOverrides,
 }: RecursiveFormProps<T>) {
   const Tree = nodes.map((node) => {
@@ -46,6 +44,7 @@ export function BtgRenderTree<T extends object>({
                 nodes={node.children}
                 formik={formik}
                 path={currentPath}
+                selectOptions={selectOptions}
                 StyleOverrides={StyleOverrides}
               />
             }
@@ -54,9 +53,15 @@ export function BtgRenderTree<T extends object>({
       }
 
       case NodeType.Field: {
-        const props = { node, path, formik, StyleOverrides };
+        const props = {
+          node,
+          path,
+          formik,
+          selectOptions,
+          StyleOverrides,
+        };
 
-        return FormInputBuilder(props);
+        return FormInputBuilder<T>(props);
       }
       default: {
         return null;
