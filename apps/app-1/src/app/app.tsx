@@ -3,46 +3,14 @@ import {
   BtgRenderTree,
   transformObjectToFormTree,
   type FormStructure,
+  type OptionType,
 } from '@btg/shared-ui';
 import '@btg/shared-ui/styles';
 import { FormikProvider, useFormik } from 'formik';
 import { useMemo, type FormEvent } from 'react';
 import { useRouteLoaderData } from 'react-router';
 import styles from './app.module.css';
-
-/**
- *
- * Add more types and properties to the type/objejct combo
- */
-export type FormikFormProps = {
-  person: {
-    id: string;
-    name: string;
-    nickname: string;
-    favoriteColor: string;
-    parents: {
-      mom: string;
-      dad: string;
-      bro: string;
-      sis: string;
-    };
-  };
-  place: {
-    address: string;
-    city: string;
-    state: string;
-    zip: string;
-    car: {
-      make: string;
-      model: string;
-    };
-  };
-};
-
-interface OptionType {
-  label: string;
-  value: number;
-}
+import type { FormikFormProps } from './routes';
 
 // 2. Define the main type for the selectValues object
 export interface SelectValuesType {
@@ -60,13 +28,22 @@ type ComponentStructure = {
 //THIS IS WHAT I MEAN BY REUSEABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
 
 export function App() {
-  const { values, structure, dropdown } = useRouteLoaderData(
-    'app',
-  ) as ComponentStructure;
+  const [{ values, structure, dropdown }] = useRouteLoaderData('app') as [
+    ComponentStructure,
+  ];
   const formik = useFormik<FormikFormProps>({
     initialValues: values,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const options: RequestInit = {
+        body: JSON.stringify(values),
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const postResp = await fetch('http://localhost:4201/practices', options);
+
+      console.log(await postResp.json());
     },
   });
 
@@ -87,20 +64,16 @@ export function App() {
     <div
       style={{
         backgroundColor: '#101010',
-        minHeight: '100vh',
         width: '100%',
       }}
     >
       <FormikProvider value={formik}>
         <form
+          className={styles['form']}
           action={undefined}
           onSubmit={handleSubmit}
           onReset={() => formik.resetForm()}
           encType="application/json"
-          style={{
-            paddingBlock: '3rem 1rem',
-            paddingInline: '5rem',
-          }}
         >
           <div className={styles['appStyles']}>
             <BtgRenderTree<FormikFormProps>
@@ -140,24 +113,23 @@ export function App() {
                 },
               }}
             />
-            <BtgFieldset
-              fieldLabel="Actions"
-              StyleOverrides={{
-                Root: { flex: '1 0 100%' },
-                Legend: { color: 'azure', borderColor: 'azure' },
-              }}
-              InputElement={
-                <div style={{ display: 'flex' }}>
-                  <div>
-                    <button type="submit">Submit</button>
-                  </div>
-                  <div>
-                    <button type="reset">Reset</button>
-                  </div>
-                </div>
-              }
-            />
           </div>
+          <BtgFieldset
+            fieldLabel="Actions"
+            StyleOverrides={{
+              Legend: { color: 'azure', borderColor: 'azure' },
+            }}
+            InputElement={
+              <div style={{ display: 'flex' }}>
+                <div>
+                  <button type="submit">Submit</button>
+                </div>
+                <div>
+                  <button type="reset">Reset</button>
+                </div>
+              </div>
+            }
+          />
         </form>
       </FormikProvider>
     </div>

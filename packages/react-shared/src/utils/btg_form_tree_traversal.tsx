@@ -15,7 +15,6 @@ export function transformObjectToFormTree<T extends object>(
   if (typeof obj !== 'object' || obj === null || Array.isArray(obj)) {
     return [];
   }
-
   return Object.keys(obj)
     .map((key) => {
       const value = obj[key as Extract<keyof T, string>];
@@ -24,7 +23,7 @@ export function transformObjectToFormTree<T extends object>(
         typeof value === 'object' &&
         value !== null &&
         'type' in value &&
-        'id' in value &&
+        'typeId' in value &&
         (value.type === 'text' || value.type === 'dropdown')
       ) {
         const field = value as FormField;
@@ -32,7 +31,7 @@ export function transformObjectToFormTree<T extends object>(
           type: 'field',
           name: key,
           fieldType: field.type,
-          fieldId: field.id,
+          fieldId: field.typeId,
         } as FieldNode;
       } else if (
         typeof value === 'object' &&

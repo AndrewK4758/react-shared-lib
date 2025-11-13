@@ -24,7 +24,7 @@ export type BtgDropDownStyles = BtgCommonStyles<
 
 export interface OptionType {
   label: string;
-  value: number;
+  value: string;
 }
 
 export type BtgRenderTreeStyles = {
@@ -67,7 +67,7 @@ export const NodeType: NodeTypeSelector = Object.freeze({
   Field: 'field',
 } as const);
 
-export type FormField = { type: 'text' | 'dropdown'; id: number };
+export type FormField = { type: 'text' | 'dropdown'; typeId: number };
 
 export type FormStructure = {
   [key: string]: FormField | FormStructure;

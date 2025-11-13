@@ -1,37 +1,37 @@
 import { Outlet, type RouteObject } from 'react-router';
 // import formStructure from '../assets/form_structure.json';
 import type { FormStructure } from '@btg/shared-ui';
-import App, { type FormikFormProps } from './app';
+import App from './app';
 import styles from './app.module.css';
 
-const formStructure: FormStructure = {
-  newSection: {
-    one: { type: 'text', id: 0 },
-    two: { type: 'text', id: 1 },
-    three: { type: 'text', id: 1 },
-  },
+/**
+ *
+ * Add more types and properties to the type/objejct combo
+ */
+
+export type FormikFormProps = {
   person: {
-    id: { type: 'text', id: 1 },
-    name: { type: 'text', id: 1 },
-    nickname: { type: 'text', id: 1 },
-    favoriteColor: { type: 'dropdown', id: 2 },
-    parents: {
-      mom: { type: 'text', id: 1 },
-      dad: { type: 'text', id: 1 },
-      bro: { type: 'text', id: 1 },
-      sis: { type: 'text', id: 1 },
-    },
-  },
+    id: string;
+    name: string;
+    nickname: string;
+    favoriteColor: string;
+    family: {
+      mom: string;
+      dad: string;
+      bro: string;
+      sis: string;
+    };
+  };
   place: {
-    address: { type: 'text', id: 1 },
-    city: { type: 'text', id: 1 },
-    state: { type: 'dropdown', id: 2 },
-    zip: { type: 'text', id: 1 },
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
     car: {
-      make: { type: 'dropdown', id: 2 },
-      model: { type: 'dropdown', id: 2 },
-    },
-  },
+      make: string;
+      model: string;
+    };
+  };
 };
 
 export default [
@@ -69,30 +69,13 @@ export default [
         index: true,
         element: <App />,
         loader: async () => {
-          const pretendData: FormikFormProps = {
-            person: {
-              id: '',
-              name: '',
-              nickname: '',
-              favoriteColor: '',
-              parents: {
-                mom: '',
-                dad: '',
-                bro: '',
-                sis: '',
-              },
-            },
-            place: {
-              address: '',
-              city: '',
-              state: '',
-              zip: '',
-              car: {
-                make: '',
-                model: '',
-              },
-            },
-          };
+          const dataResp = await fetch('http://localhost:4201/practices');
+          const pretendData = await dataResp.json();
+          const formStructureResp = await fetch(
+            'http://localhost:4201/form-structure',
+          );
+          const formStructure =
+            (await formStructureResp.json()) as FormStructure;
 
           // MOCK LOADING SELECT VALUES
 
@@ -120,17 +103,13 @@ export default [
             ],
           };
 
-          return new Promise((res) => {
-            setTimeout(
-              () =>
-                res({
-                  values: pretendData,
-                  structure: formStructure,
-                  dropdown: selectValues,
-                }),
-              1500,
-            );
-          });
+          return Promise.all([
+            {
+              values: pretendData,
+              structure: formStructure,
+              dropdown: selectValues,
+            },
+          ]);
         },
       },
     ],

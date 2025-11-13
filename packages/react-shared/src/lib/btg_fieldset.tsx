@@ -19,18 +19,20 @@ export function BtgFieldset<T>({
   ...props
 }: BtgFieldsetProps<T>) {
   return (
-    <Fieldset.Root
-      className={styles['fieldsetRoot']}
-      style={StyleOverrides?.Root}
-    >
-      <Fieldset.Legend
-        className={styles['fieldsetLegend']}
-        style={StyleOverrides?.Legend}
+    <div className={styles['wrapper']}>
+      <Fieldset.Root
+        className={styles['fieldsetRoot']}
+        style={StyleOverrides?.Root}
       >
-        {fieldLabel}
-      </Fieldset.Legend>
-      {InputElement}
-    </Fieldset.Root>
+        <Fieldset.Legend
+          className={styles['fieldsetLegend']}
+          style={StyleOverrides?.Legend}
+        >
+          {fieldLabel}
+        </Fieldset.Legend>
+        {InputElement}
+      </Fieldset.Root>
+    </div>
   );
 }
 
