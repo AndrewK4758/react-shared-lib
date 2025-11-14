@@ -27,12 +27,31 @@ type ComponentStructure = {
 
 //THIS IS WHAT I MEAN BY REUSEABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
 
+const initialValues: FormikFormProps = {
+  person: {
+    name: '',
+    id: '',
+    favoriteColor: '',
+    nickname: '',
+    family: { bro: '', sis: '', mom: '', dad: '' },
+  },
+  place: {
+    address: '',
+    car: { make: '', model: '' },
+    city: '',
+    state: '',
+    zip: '',
+  },
+};
+
 export function App() {
-  const [{ values, structure, dropdown }] = useRouteLoaderData('app') as [
-    ComponentStructure,
+  const [values, structure, dropdown] = useRouteLoaderData('app') as [
+    FormikFormProps[],
+    FormStructure,
+    SelectValuesType,
   ];
   const formik = useFormik<FormikFormProps>({
-    initialValues: values,
+    initialValues: initialValues,
     onSubmit: async (values) => {
       const options: RequestInit = {
         body: JSON.stringify(values),

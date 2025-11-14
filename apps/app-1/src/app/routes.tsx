@@ -69,13 +69,12 @@ export default [
         index: true,
         element: <App />,
         loader: async () => {
-          const dataResp = await fetch('http://localhost:4201/practices');
-          const pretendData = await dataResp.json();
-          const formStructureResp = await fetch(
+          const pretendData = fetch('http://localhost:4201/practices').then(
+            (resp) => resp.json(),
+          ) as Promise<FormikFormProps[]>;
+          const formStructure = fetch(
             'http://localhost:4201/form-structure',
-          );
-          const formStructure =
-            (await formStructureResp.json()) as FormStructure;
+          ).then((resp) => resp.json()) as Promise<FormStructure>;
 
           // MOCK LOADING SELECT VALUES
 
@@ -103,13 +102,7 @@ export default [
             ],
           };
 
-          return Promise.all([
-            {
-              values: pretendData,
-              structure: formStructure,
-              dropdown: selectValues,
-            },
-          ]);
+          return Promise.all([pretendData, formStructure, selectValues]);
         },
       },
     ],

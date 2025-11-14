@@ -16,7 +16,6 @@
   font-size: 1.25rem;
   padding-inline: 0.25rem;
   flex: 1;
-  font-family: monospace;
 }
 
 .inputControl {
@@ -28,3 +27,8 @@
   padding-inline: 0.25rem;
 }
 
+
+.inputControl:focus-within {
+  outline: 5px solid azure;
+  outline-offset: 2px;
+}

@@ -1,9 +1,11 @@
 import { Field } from '@base-ui-components/react/field';
+import { getIn } from 'formik';
 import type { FormikProps } from 'formik/dist/types';
 import {
   forwardRef,
   memo,
   useCallback,
+  useState,
   type ChangeEvent,
   type ComponentPropsWithRef,
   type FocusEvent,
@@ -27,14 +29,14 @@ const BtgInputImplementation = memo(
     { label, name, formik, StyleOverrides, ...props }: BtgInputProps<T>,
     ref?: Ref<HTMLInputElement> | undefined,
   ) {
+    // const [focused, setFocused] = useState
     const passedOnChange = props.onChange;
     const passedOnBlur = props.onBlur;
 
-    const { value, onBlur, onChange } =
-      formik.getFieldProps<Extract<T[keyof T], string>>(name);
+    const error = getIn(formik.errors, name);
+    const touched = getIn(formik.touched, name);
 
-    const touched = formik.touched[name] as boolean;
-    const error = formik.errors[name] as string;
+    const { value, onBlur, onChange } = formik.getFieldProps(name);
 
     const handleChange = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +54,7 @@ const BtgInputImplementation = memo(
       },
       [onBlur, passedOnBlur],
     );
-
+    console.log(value);
     return (
       <Field.Root className={styles['inputRoot']} style={StyleOverrides?.Root}>
         <Field.Label
@@ -63,15 +65,17 @@ const BtgInputImplementation = memo(
           {label}
         </Field.Label>
         <Field.Control
+          {...props}
           className={styles['inputControl']}
           ref={ref}
-          {...props}
           id={`${name}-input-id`}
           name={name}
-          value={value ?? ''}
+          value={value}
+          disabled={formik.isSubmitting}
           onChange={handleChange}
           onBlur={handleBlur}
           style={StyleOverrides?.Control}
+          placeholder={value}
         />
 
         <BtgError
