@@ -61,6 +61,7 @@ export default defineConfig(() => ({
         'react/jsx-runtime',
         '@base-ui-components/react/select',
         '@base-ui-components/utils',
+        'formik',
       ],
     },
   },

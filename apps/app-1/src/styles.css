@@ -1,8 +1,12 @@
-body {
-  margin: 0;
-  padding: 0;
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
-p {
-  all: unset;
+body {
+    margin: 0;
+    padding: 0;
+}
+
+p, span, input, select, textarea {
+    all: unset;
 }

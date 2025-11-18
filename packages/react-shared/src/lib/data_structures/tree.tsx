@@ -2,6 +2,7 @@ import { type BaseFormProps, type FormNode, NodeType } from '../../types/types';
 import FormInputBuilder from '../../utils/form_input_builder';
 import { formatSectionNode } from '../../utils/format_nodes_to_labels';
 import BtgFieldset from '../btg_fieldset';
+
 // import styles from './tree.module.css';
 
 export interface RecursiveFormProps<T> extends BaseFormProps<T> {
@@ -21,7 +22,7 @@ export function BtgRenderTree<T extends object>({
   selectOptions,
   StyleOverrides,
 }: RecursiveFormProps<T>) {
-  const Tree = nodes.map((node) => {
+  return nodes.map((node) => {
     switch (node.type) {
       case NodeType.Section: {
         const sectionLabel = formatSectionNode(node);
@@ -61,8 +62,6 @@ export function BtgRenderTree<T extends object>({
       }
     }
   });
-
-  return Tree;
 }
 
 export default BtgRenderTree;

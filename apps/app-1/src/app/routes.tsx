@@ -10,6 +10,11 @@ import styles from './app.module.css';
  */
 
 export type FormikFormProps = {
+  newSection: {
+    one: string;
+    two: string;
+    three: string;
+  };
   person: {
     id: string;
     name: string;
@@ -30,6 +35,7 @@ export type FormikFormProps = {
     car: {
       make: string;
       model: string;
+      type: string;
     };
   };
 };

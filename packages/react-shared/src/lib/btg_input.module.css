@@ -1,34 +1,71 @@
 .inputRoot {
-  display: flex;
-  flex-direction: column;
-  padding-inline: 1rem;
-  position: relative;
-  min-height: 66px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    border-radius: 6px;
+    min-height: 54px;
+    background-color: #F5F5F5;
+    border: 1px solid azure;
 }
 
 .inputLabel {
-  margin-block: 0.5rem;
-  position: absolute;
-  top: -32px;
-  left: 32px;
-  border-radius: 6px;
-  background: #101010;
-  font-size: 1.25rem;
-  padding-inline: 0.25rem;
-  flex: 1;
+    position: absolute;
+    top: 12px;
+    left: 0.75rem;
+    font-size: 1.5rem;
 }
 
 .inputControl {
-  border-radius: 12px;
-  line-height: 1.75rem;
-  border: 2px solid transparent;
-  font-size: 1.25rem;
-  padding-block: 0.5rem;
-  padding-inline: 0.25rem;
+    color: #242424;
+    width: 100%;
+    height: 1.75rem;
+    line-height: 1rem;
+    padding-block-start: 1rem;
+    margin-block-end: -3px;
+    padding-inline: 0.5rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid transparent;
+}
+
+.inputControl:focus ~ .inputLabel,
+.inputControl:valid ~ .inputLabel {
+    animation: inputLabelFocus 170ms linear;
+    animation-fill-mode: forwards;
 }
 
 
-.inputControl:focus-within {
-  outline: 5px solid azure;
-  outline-offset: 2px;
+.inputControl:not(:focus):invalid ~ .inputLabel {
+    animation: inputLabelBlur 170ms linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes inputLabelFocus {
+    0% {
+        top: 12px;
+        font-size: 1.5rem;
+    }
+    50% {
+        top: -1px;
+        font-size: 1.25rem;
+    }
+    100% {
+        top: -2px;
+        font-size: 1rem;
+    }
+}
+
+@keyframes inputLabelBlur {
+    0% {
+        top: -2px;
+        font-size: 1rem;
+    }
+    50% {
+        top: -1px;
+        font-size: 1.25rem;
+    }
+    100% {
+        top: 12px;
+        font-size: 1.5rem;
+    }
 }

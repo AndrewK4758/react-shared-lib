@@ -1,6 +1,13 @@
 namespace PracticeData
 {
-  // NOTE: Added an Id to Practice to act as a Primary Key for EF Core
+
+  public class NewSection {
+  public int Id {get;set;}
+  public required string One {get; set;}
+  public required string Two {get; set;}
+  public required string Three {get; set;}
+  }
+
   public class Practice
   {
     public int Id { get; set; }

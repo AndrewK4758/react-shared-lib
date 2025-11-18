@@ -1,23 +1,23 @@
-.wrapper{
-  height: fit-content;
+.wrapper {
+    height: fit-content;
 }
 
 .fieldsetRoot {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  font-size: 1.5rem;
-  padding-block: 2.25rem 1rem;
-  padding-inline: 0.5rem;
-  border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 1.5rem;
+    padding-block: 2rem 1rem;
+    padding-inline: 0.5rem;
+    border: 1px solid transparent;
 
-  border-radius: 12px;
-  position: relative;
+    border-radius: 12px;
+    position: relative;
 }
 
 .fieldsetLegend {
-  position: absolute;
-  top: -18;
-  left: 8px;
-  background: #101010;
+    position: absolute;
+    top: -18px;
+    left: 8px;
+    background: #101010;
 }

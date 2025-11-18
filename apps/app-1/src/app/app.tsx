@@ -1,13 +1,13 @@
 import {
   BtgFieldset,
   BtgRenderTree,
-  transformObjectToFormTree,
   type FormStructure,
   type OptionType,
+  transformObjectToFormTree
 } from '@btg/shared-ui';
 import '@btg/shared-ui/styles';
 import { FormikProvider, useFormik } from 'formik';
-import { useMemo, type FormEvent } from 'react';
+import { type FormEvent, useMemo } from 'react';
 import { useRouteLoaderData } from 'react-router';
 import styles from './app.module.css';
 import type { FormikFormProps } from './routes';
@@ -17,17 +17,22 @@ export interface SelectValuesType {
   [key: string]: OptionType[];
 }
 
-type ComponentStructure = {
-  values: FormikFormProps;
-  structure: FormStructure;
-  dropdown: SelectValuesType;
-};
+// type ComponentStructure = {
+//   values: FormikFormProps;
+//   structure: FormStructure;
+//   dropdown: SelectValuesType;
+// };
 
 // WAS MORE FOCUSED ON THE FORM SINCE THAT IS WHAT WE USE THE MOST, WE CAN USE THE BTG RENDER TREE AS A BASE FUNCTION AND ACCORDING TO TYPES OR NEEDS SWAP OUT THE FUNCTIONS NECESSARY
 
-//THIS IS WHAT I MEAN BY REUSEABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
+//THIS IS WHAT I MEAN BY REUSABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
 
 const initialValues: FormikFormProps = {
+  newSection: {
+    one: '',
+    two: '',
+    three: '',
+  },
   person: {
     name: '',
     id: '',
@@ -37,7 +42,7 @@ const initialValues: FormikFormProps = {
   },
   place: {
     address: '',
-    car: { make: '', model: '' },
+    car: { make: '', model: '', type: '' },
     city: '',
     state: '',
     zip: '',
@@ -45,7 +50,7 @@ const initialValues: FormikFormProps = {
 };
 
 export function App() {
-  const [values, structure, dropdown] = useRouteLoaderData('app') as [
+  const [_, structure, dropdown] = useRouteLoaderData('app') as [
     FormikFormProps[],
     FormStructure,
     SelectValuesType,
@@ -107,7 +112,7 @@ export function App() {
                     maxHeight: 'fit-content',
                   },
                   Legend: {
-                    color: 'red',
+                    color: 'azure',
                   },
                 },
                 Input: {
@@ -117,6 +122,7 @@ export function App() {
                   Label: {
                     color: 'GrayText',
                   },
+                  Control: {},
                 },
                 Dropdown: {
                   Trigger: { border: '1px solid azure' },

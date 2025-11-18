@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import routes from './app/routes';
 import './styles.css';
 
-const rotuer = createBrowserRouter(routes);
+const router= createBrowserRouter(routes);
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
-root.render(<RouterProvider router={rotuer} />);
+root.render(<RouterProvider router={router} />);

@@ -7,10 +7,10 @@
 }
 
 .form {
-  display: 'grid';
-  grid-template-columns: '1fr';
-  grid-template-rows: 'auto 1fr';
-  gap: '2rem'
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 2rem
 }
 
 .loading-dots {

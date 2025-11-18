@@ -20,6 +20,7 @@ export function FormInputBuilder<T>({
     case 'text': {
       const fieldName = path ? `${path}.${node.name}` : node.name;
       const fieldLabel = formatFieldNode(node);
+
       return (
         <BtgInput<T>
           {...props}

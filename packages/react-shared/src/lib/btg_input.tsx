@@ -1,20 +1,19 @@
 import { Field } from '@base-ui-components/react/field';
-import { getIn } from 'formik';
 import type { FormikProps } from 'formik/dist/types';
 import {
-  forwardRef,
-  memo,
-  useCallback,
-  useState,
   type ChangeEvent,
   type ComponentPropsWithRef,
   type FocusEvent,
+  forwardRef,
+  memo,
   type ReactElement,
   type Ref,
+  useCallback
 } from 'react';
 import type { BtgInputStyles } from '../types/types';
 import styles from './btg_input.module.css';
 import BtgError from './error/error';
+import { getIn } from 'formik';
 
 interface BtgInputProps<T>
   extends ComponentPropsWithRef<Exclude<'input', 'style'>> {
@@ -29,14 +28,13 @@ const BtgInputImplementation = memo(
     { label, name, formik, StyleOverrides, ...props }: BtgInputProps<T>,
     ref?: Ref<HTMLInputElement> | undefined,
   ) {
-    // const [focused, setFocused] = useState
     const passedOnChange = props.onChange;
     const passedOnBlur = props.onBlur;
 
-    const error = getIn(formik.errors, name);
-    const touched = getIn(formik.touched, name);
+    const { value, onChange, onBlur } = formik.getFieldProps(name);
 
-    const { value, onBlur, onChange } = formik.getFieldProps(name);
+    const touched = getIn(formik.touched, name);
+    const error = getIn(formik.errors, name);
 
     const handleChange = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +44,7 @@ const BtgInputImplementation = memo(
       [onChange, passedOnChange],
     );
 
-    const handleBlur = useCallback(
+    const handleBlurEvent = useCallback(
       (event: FocusEvent<HTMLInputElement>) => {
         onBlur(event);
         passedOnBlur && passedOnBlur(event);
@@ -54,16 +52,9 @@ const BtgInputImplementation = memo(
       },
       [onBlur, passedOnBlur],
     );
-    console.log(value);
+
     return (
       <Field.Root className={styles['inputRoot']} style={StyleOverrides?.Root}>
-        <Field.Label
-          htmlFor={`${name}-input-id`}
-          className={styles['inputLabel']}
-          style={StyleOverrides?.Label}
-        >
-          {label}
-        </Field.Label>
         <Field.Control
           {...props}
           className={styles['inputControl']}
@@ -73,11 +64,17 @@ const BtgInputImplementation = memo(
           value={value}
           disabled={formik.isSubmitting}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={handleBlurEvent}
           style={StyleOverrides?.Control}
-          placeholder={value}
+          required={true}
         />
-
+        <Field.Label
+          htmlFor={`${name}-input-id`}
+          className={styles['inputLabel']}
+          style={StyleOverrides?.Label}
+        >
+          {label}
+        </Field.Label>
         <BtgError
           touched={touched}
           error={error}
