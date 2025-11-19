@@ -1,12 +1,15 @@
 import { Select } from '@base-ui-components/react/select';
-import { getIn, type FormikProps } from 'formik';
-import { Fragment, memo, useCallback, type ReactElement } from 'react';
+import { type FormikProps, getIn } from 'formik';
+import { Fragment, memo, type ReactElement, useCallback } from 'react';
 import type { BtgDropDownStyles, OptionType } from '../types/types';
 import styles from './btg_dropdown.module.css';
 import BtgError from './error/error';
 
+type SelectProps<M extends boolean> = Select.Root.Props<string | number, M>;
+
 interface BtgDropDownProps<T, M extends boolean | undefined>
-  extends Select.Root.Props<string | number, M> {
+  // @ts-expect-error - SelectProps
+  extends SelectProps<M> {
   name: Extract<keyof T, string>;
   label: string;
   formik: FormikProps<T>;
@@ -27,8 +30,7 @@ export const BtgDropdown = memo(function <T, M extends boolean | undefined>({
   const touched = getIn(formik.touched, name);
 
   const itemArray = Array.isArray(items) ? items : [];
-
-  const passedOnChange = props.onValueChange;
+  // const passedOnChange = props.onValueChange;
 
   const handleChange = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,9 +39,9 @@ export const BtgDropdown = memo(function <T, M extends boolean | undefined>({
 
       await formik.setFieldValue(name, value);
 
-      passedOnChange && passedOnChange(value, event);
+      // passedOnChange && passedOnChange(value, event);
     },
-    [formik, name, passedOnChange],
+    [formik, name],
   );
 
   return (
@@ -60,6 +62,7 @@ export const BtgDropdown = memo(function <T, M extends boolean | undefined>({
       >
         <Select.Trigger
           className={styles['select']}
+          id={name}
           style={StyleOverrides?.Trigger}
         >
           <Select.Value />

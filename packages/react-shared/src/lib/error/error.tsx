@@ -15,7 +15,7 @@ export const BtgError = memo(function ({
     <div className={styles['inputError']}>
       {touched && error && (
         <span {...props} className={styles['error']} style={props.style}>
-          {`${error}`}ERROR
+          {`${error}ERROR`}
         </span>
       )}
     </div>

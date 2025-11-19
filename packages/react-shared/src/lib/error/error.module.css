@@ -1,13 +1,15 @@
 .inputError {
-    display: block;
+    flex: 0 1 13px;
+    display: flex;
+    padding-block-start: 3px;
     margin-inline-start: 0.75rem;
-    height: fit-content;
-    min-height: 12px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 
 .error {
-    height: fit-content;
+    width: 100%;
     color: #D32F2F;
-    font-size: 0.75rem
+    font-size: 0.675rem;
 }
