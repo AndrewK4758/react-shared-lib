@@ -1,0 +1,19 @@
+:root {
+    /*Colors*/
+    --label-color: oklch(17.3% 0 0);
+    --text-color: oklch(26.03% 0 0);
+    --input-background: oklch(97.02% 0 0);
+
+    /*Shapes*/
+    --radius-size: 6px;
+    --border-template: 1px solid transparent;
+
+    /*    Sizes*/
+    --input-label: 0.75rem;
+    --input-label-halfway: calc(var(--input-label) + calc(abs(var(--input-label-focus)) - 50%) / 2);
+    --input-label-focus: -0.0675rem;
+    --input-label-left: 0.75rem;
+    --input-root-block-padding: 0.0675rem;
+}
+
+/**/

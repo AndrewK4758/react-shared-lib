@@ -3,7 +3,7 @@ import {
   BtgRenderTree,
   type FormStructure,
   type OptionType,
-  transformObjectToFormTree,
+  transformObjectToFormTree
 } from '@btg/shared-ui';
 import '@btg/shared-ui/styles';
 import { FormikProvider, useFormik } from 'formik';
@@ -119,14 +119,15 @@ export function App() {
                   Root: {
                     maxHeight: 'fit-content',
                   },
-                  Label: {},
+                  Label: { color: '#242424' },
                   Control: {
                     borderColor: 'ActiveBorder',
                   },
                 },
                 Dropdown: {
+                  Root: {},
                   Trigger: { border: '1px solid azure' },
-                  Label: { color: 'GrayText' },
+                  Label: {},
                   List: {
                     borderColor: 'azure',
                     borderRadius: '12px',

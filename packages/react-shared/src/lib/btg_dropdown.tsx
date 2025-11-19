@@ -1,15 +1,15 @@
-import { Select } from '@base-ui-components/react/select';
 import { type FormikProps, getIn } from 'formik';
-import { Fragment, memo, type ReactElement, useCallback } from 'react';
+import type { ComponentProps, FocusEvent } from 'react';
+import { memo, type ReactElement, useCallback } from 'react';
 import type { BtgDropDownStyles, OptionType } from '../types/types';
 import styles from './btg_dropdown.module.css';
+import { Combobox } from '@base-ui-components/react/combobox';
+import { Field } from '@base-ui-components/react/field';
 import BtgError from './error/error';
 
-type SelectProps<M extends boolean> = Select.Root.Props<string | number, M>;
+type BaseComboboxRawProps = ComponentProps<typeof Combobox.Root>;
 
-interface BtgDropDownProps<T, M extends boolean | undefined>
-  // @ts-expect-error - SelectProps
-  extends SelectProps<M> {
+interface BtgDropDownProps<T> extends BaseComboboxRawProps {
   name: Extract<keyof T, string>;
   label: string;
   formik: FormikProps<T>;
@@ -17,124 +17,106 @@ interface BtgDropDownProps<T, M extends boolean | undefined>
   StyleOverrides?: BtgDropDownStyles;
 }
 
-export const BtgDropdown = memo(function <T, M extends boolean | undefined>({
+export const BtgDropdown = memo(function <T>({
   name,
   label,
   formik,
   items,
   StyleOverrides,
   ...props
-}: BtgDropDownProps<T, M>) {
-  const value = getIn(formik.values, name);
-  const error = getIn(formik.errors, name);
-  const touched = getIn(formik.touched, name);
+}: BtgDropDownProps<T>) {
+  const { value, onBlur } = formik.getFieldProps(name);
 
-  const itemArray = Array.isArray(items) ? items : [];
-  // const passedOnChange = props.onValueChange;
+  const error: string | undefined = getIn(formik.errors, name);
+  const touched: boolean | undefined = getIn(formik.touched, name);
+
+  const itemArray: OptionType[] = Array.isArray(items) ? items : [];
+  const passedOnChange = props.onValueChange;
 
   const handleChange = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async (value: any, event: Select.Root.ChangeEventDetails) => {
+    async (value: unknown, event: Combobox.Root.ChangeEventDetails) => {
       console.log(value, event);
-
       await formik.setFieldValue(name, value);
-
-      // passedOnChange && passedOnChange(value, event);
+      passedOnChange && passedOnChange(value, event);
     },
-    [formik, name],
+    [formik, name, passedOnChange],
+  );
+
+  const handleBlur = useCallback(
+    async (event: FocusEvent<HTMLDivElement>) => {
+      console.log(event);
+
+      onBlur(event);
+    },
+    [onBlur],
   );
 
   return (
-    <div className={styles['wrapper']} style={StyleOverrides?.Wrapper}>
-      <label
-        htmlFor={name}
-        className={styles['label']}
-        style={StyleOverrides?.Label}
-      >
-        {label}
-      </label>
-      <Select.Root
-        {...props}
-        name={name}
-        value={value}
-        items={items}
-        onValueChange={handleChange}
-      >
-        <Select.Trigger
-          className={styles['select']}
+    <Field.Root
+      name={name}
+      onBlur={handleBlur}
+      className={styles['inputRoot']}
+      style={StyleOverrides?.Root}
+    >
+      <Combobox.Root {...props} items={itemArray} onValueChange={handleChange}>
+        <Combobox.Input
           id={name}
-          style={StyleOverrides?.Trigger}
+          name={name}
+          className={styles['inputControl']}
+          value={items.find((item) => item.value === value)?.label}
+        />
+        <Field.Label
+          className={styles['inputLabel']}
+          style={StyleOverrides?.Label}
+          htmlFor={name}
         >
-          <Select.Value />
-          <Select.Icon className={styles['selectIcon']}>
-            <ChevronUpDownIcon />
-          </Select.Icon>
-        </Select.Trigger>
-        <Select.Portal>
-          <Select.Positioner className={styles['positioner']} sideOffset={8}>
-            <Select.Popup className={styles['popup']}>
-              <Select.ScrollUpArrow className={styles['scrollArrow']} />
-              <Select.List
-                className={styles['list']}
-                style={StyleOverrides?.List}
-              >
-                {itemArray.map((e) => (
-                  <Fragment key={e.label}>
-                    <Select.Item
-                      className={styles['item']}
-                      style={StyleOverrides?.ItemText}
-                      value={e.value}
-                    >
-                      <Select.ItemIndicator className={styles['itemIndicator']}>
-                        <CheckIcon className={styles['itemIndicatorIcon']} />
-                      </Select.ItemIndicator>
-                      <Select.ItemText
-                        className={styles['itemText']}
-                        style={StyleOverrides?.ItemText}
-                      >
-                        {e.label}
-                      </Select.ItemText>
-                    </Select.Item>
-                    <Select.Separator
-                      style={{ borderBottom: '1px solid #101010' }}
-                    />
-                  </Fragment>
-                ))}
-              </Select.List>
-              <Select.ScrollDownArrow className={styles['scrollArrow']} />
-            </Select.Popup>
-          </Select.Positioner>
-        </Select.Portal>
-        <BtgError touched={touched} error={error} />
-      </Select.Root>
-    </div>
+          {label}
+        </Field.Label>
+        <div className={styles.ActionButtons}>
+          <Combobox.Clear className={styles.Clear} aria-label="Clear selection">
+            <ClearIcon className={styles.ClearIcon} />
+          </Combobox.Clear>
+          <Combobox.Trigger className={styles.Trigger} aria-label="Open popup">
+            <ChevronDownIcon className={styles.TriggerIcon} />
+          </Combobox.Trigger>
+        </div>
+
+        <Combobox.Portal>
+          <Combobox.Positioner className={styles.Positioner} sideOffset={4}>
+            <Combobox.Popup className={styles.Popup}>
+              <Combobox.Empty className={styles.Empty}>
+                {`${label} is empty`}
+              </Combobox.Empty>
+              <Combobox.List className={styles.List}>
+                {(item: OptionType): ReactElement => (
+                  <Combobox.Item
+                    key={item.value}
+                    value={item.value}
+                    className={styles.Item}
+                  >
+                    <Combobox.ItemIndicator className={styles.ItemIndicator}>
+                      <CheckIcon className={styles.ItemIndicatorIcon} />
+                    </Combobox.ItemIndicator>
+                    <div className={styles.ItemText}>{item.label}</div>
+                  </Combobox.Item>
+                )}
+              </Combobox.List>
+            </Combobox.Popup>
+          </Combobox.Positioner>
+        </Combobox.Portal>
+      </Combobox.Root>
+      <Field.Error render={<BtgError touched={touched} error={error} />} />
+    </Field.Root>
   );
 });
 
 BtgDropdown.displayName = 'BtgDropDown';
 
-export default BtgDropdown as <T, M extends boolean>(
-  props: BtgDropDownProps<T, M>,
+export default BtgDropdown as <T>(
+  props: BtgDropDownProps<T>,
 ) => ReactElement<T>;
 
-function ChevronUpDownIcon(props: React.ComponentProps<'svg'>) {
-  return (
-    <svg
-      width="8"
-      height="12"
-      viewBox="0 0 8 12"
-      fill="none"
-      stroke="currentcolor"
-      strokeWidth="1.5"
-      {...props}
-    >
-      <path d="M0.5 4.5L4 1.5L7.5 4.5" />
-      <path d="M0.5 7.5L4 10.5L7.5 7.5" />
-    </svg>
-  );
-}
-
-function CheckIcon(props: React.ComponentProps<'svg'>) {
+function CheckIcon(props: ComponentProps<'svg'>) {
   return (
     <svg
       fill="currentcolor"
@@ -144,6 +126,41 @@ function CheckIcon(props: React.ComponentProps<'svg'>) {
       {...props}
     >
       <path d="M9.1603 1.12218C9.50684 1.34873 9.60427 1.81354 9.37792 2.16038L5.13603 8.66012C5.01614 8.8438 4.82192 8.96576 4.60451 8.99384C4.3871 9.02194 4.1683 8.95335 4.00574 8.80615L1.24664 6.30769C0.939709 6.02975 0.916013 5.55541 1.19372 5.24822C1.47142 4.94102 1.94536 4.91731 2.2523 5.19524L4.36085 7.10461L8.12299 1.33999C8.34934 0.993152 8.81376 0.895638 9.1603 1.12218Z" />
+    </svg>
+  );
+}
+
+function ClearIcon(props: ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M18 6L6 18" />
+      <path d="M6 6l12 12" />
+    </svg>
+  );
+}
+
+function ChevronDownIcon(props: ComponentProps<'svg'>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M6 9l6 6 6-6" />
     </svg>
   );
 }

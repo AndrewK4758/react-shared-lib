@@ -38,7 +38,7 @@ export function FormInputBuilder<T>({
       const fieldData = selectOptions[node.name];
 
       return (
-        <BtgDropdown<T, false>
+        <BtgDropdown<T>
           {...props}
           key={`${fieldName}-${fieldLabel}`}
           label={fieldLabel}
