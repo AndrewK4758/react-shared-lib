@@ -2,7 +2,7 @@
     /*Colors*/
     --label-color: oklch(17.3% 0 0);
     --text-color: oklch(26.03% 0 0);
-    --input-background: oklch(97.02% 0 0);
+    --input-background: transparent;
 
     /*Shapes*/
     --radius-size: 6px;

@@ -1,8 +1,8 @@
 import { Outlet, type RouteObject } from 'react-router';
 // import formStructure from '../assets/form_structure.json';
 import type { FormStructure } from '@btg/shared-ui';
-import App from './app';
 import styles from './app.module.css';
+import App from './app';
 
 /**
  *
@@ -19,7 +19,7 @@ export type FormikFormProps = {
     id: string;
     name: string;
     nickname: string;
-    favoriteColor: string;
+    favoriteColor: { label: string; value: number };
     family: {
       mom: string;
       dad: string;
@@ -30,11 +30,11 @@ export type FormikFormProps = {
   place: {
     address: string;
     city: string;
-    state: string;
+    state: { label: string; value: number };
     zip: string;
     car: {
-      make: string;
-      model: string;
+      make: { label: string; value: number };
+      model: { label: string; value: number };
       type: string;
     };
   };
@@ -81,9 +81,7 @@ export default [
           const formStructure = fetch(
             'http://localhost:4201/form-structure',
           ).then((resp) => resp.json()) as Promise<FormStructure>;
-
-          // MOCK LOADING SELECT VALUES
-
+          console.log(await formStructure);
           const selectValues = {
             favoriteColor: [
               { label: 'Red', value: 0 },

@@ -3,7 +3,7 @@ import {
   BtgRenderTree,
   type FormStructure,
   type OptionType,
-  transformObjectToFormTree
+  transformObjectToFormTree,
 } from '@btg/shared-ui';
 import '@btg/shared-ui/styles';
 import { FormikProvider, useFormik } from 'formik';
@@ -11,21 +11,11 @@ import { type FormEvent, useMemo } from 'react';
 import { useRouteLoaderData } from 'react-router';
 import styles from './app.module.css';
 import type { FormikFormProps } from './routes';
+import * as Yup from 'yup';
 
-// 2. Define the main type for the selectValues object
 export interface SelectValuesType {
   [key: string]: OptionType[];
 }
-
-// type ComponentStructure = {
-//   values: FormikFormProps;
-//   structure: FormStructure;
-//   dropdown: SelectValuesType;
-// };
-
-// WAS MORE FOCUSED ON THE FORM SINCE THAT IS WHAT WE USE THE MOST, WE CAN USE THE BTG RENDER TREE AS A BASE FUNCTION AND ACCORDING TO TYPES OR NEEDS SWAP OUT THE FUNCTIONS NECESSARY
-
-//THIS IS WHAT I MEAN BY REUSABLE AND EXTENSIBLE COMPONENTS. CHANGE THE COLOR IN THE APP AND EVERYTHING ELSE CHANGES, OR CHANGE THE STYLE OR PROP IN THE LIBRARY AND EVERY APP CHANGES
 
 const initialValues: FormikFormProps = {
   newSection: {
@@ -36,18 +26,66 @@ const initialValues: FormikFormProps = {
   person: {
     name: '',
     id: '',
-    favoriteColor: '',
+    favoriteColor: { label: '', value: -1 },
     nickname: '',
     family: { bro: '', sis: '', mom: '', dad: '' },
   },
   place: {
     address: '',
-    car: { make: '', model: '', type: '' },
+    car: {
+      make: { label: '', value: -1 },
+      model: { label: '', value: -1 },
+      type: '',
+    },
     city: '',
-    state: '',
+    state: { label: '', value: -1 },
     zip: '',
   },
 };
+
+const validationSchema: Yup.ObjectSchema<Yup.AnyObject, FormikFormProps> =
+  Yup.object<FormikFormProps>({
+    newSection: Yup.object({
+      one: Yup.string().required().min(2),
+      two: Yup.string().required().min(2),
+      three: Yup.string().required().min(2),
+    }),
+    person: Yup.object({
+      name: Yup.string().required().min(2),
+      id: Yup.string().required().min(2),
+      favoriteColor: Yup.object<OptionType>({
+        label: Yup.string().required().min(2),
+        value: Yup.number().required().min(0),
+      }).required(),
+      nickname: Yup.string().required().min(2),
+      family: Yup.object({
+        bro: Yup.string().required().min(2),
+        sis: Yup.string().required().min(2),
+        mom: Yup.string().required().min(2),
+        dad: Yup.string().required().min(2),
+      }),
+    }),
+    place: Yup.object({
+      address: Yup.string().required().min(2),
+      car: Yup.object({
+        make: Yup.object<OptionType>({
+          label: Yup.string().required().min(2),
+          value: Yup.number().required().min(0),
+        }).required(),
+        model: Yup.object<OptionType>({
+          label: Yup.string().required().min(2),
+          value: Yup.number().required().min(0),
+        }).required(),
+        type: Yup.string().required().min(2),
+      }),
+      city: Yup.string().required().min(2),
+      state: Yup.object<OptionType>({
+        label: Yup.string().required().min(2),
+        value: Yup.number().required().min(0),
+      }).required(),
+      zip: Yup.string().required().min(2),
+    }),
+  });
 
 export function App() {
   const [_, structure, dropdown] = useRouteLoaderData('app') as [
@@ -69,6 +107,9 @@ export function App() {
 
       console.log(await postResp.json());
     },
+    validateOnBlur: true,
+    validateOnChange: true,
+    validationSchema: validationSchema,
   });
 
   //Import the model from db and render the objects according to what is added to db.
@@ -83,7 +124,9 @@ export function App() {
     formik.handleSubmit(event.currentTarget.values);
   };
 
-  console.log(formik.values);
+  console.log('VALUES', formik.values);
+  console.log('TOUCHED', formik.touched);
+  console.log('ERRORS', formik.errors);
   return (
     <div
       style={{
@@ -118,6 +161,7 @@ export function App() {
                 Input: {
                   Root: {
                     maxHeight: 'fit-content',
+                    backgroundColor: 'Background',
                   },
                   Label: { color: '#242424' },
                   Control: {
@@ -125,7 +169,7 @@ export function App() {
                   },
                 },
                 Dropdown: {
-                  Root: {},
+                  Root: { backgroundColor: 'Background' },
                   Trigger: { border: '1px solid azure' },
                   Label: {},
                   List: {

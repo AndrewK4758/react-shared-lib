@@ -1,6 +1,6 @@
 import BtgDropdown from '../lib/btg_dropdown';
 import BtgInput from '../lib/btg_input';
-import type { BaseFormProps, FieldNode } from '../types/types';
+import type { BaseFormProps, FieldNode, Path } from '../types/types';
 // import styles from './form_input_builder.module.css';
 import { formatFieldNode } from './format_nodes_to_labels';
 
@@ -38,11 +38,11 @@ export function FormInputBuilder<T>({
       const fieldData = selectOptions[node.name];
 
       return (
-        <BtgDropdown<T>
+        <BtgDropdown<T, Path<T>>
           {...props}
           key={`${fieldName}-${fieldLabel}`}
           label={fieldLabel}
-          name={fieldName as Extract<keyof T, string>}
+          name={fieldName as Path<T>}
           formik={formik}
           items={fieldData}
           StyleOverrides={StyleOverrides?.Dropdown}

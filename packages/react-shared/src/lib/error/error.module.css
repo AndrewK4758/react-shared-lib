@@ -1,7 +1,7 @@
 .inputError {
-    flex: 0 1 13px;
+    height: 0.75rem;
     display: flex;
-    padding-block-start: 3px;
+    margin-block-start: 0.0675rem;
     margin-inline-start: 0.75rem;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;

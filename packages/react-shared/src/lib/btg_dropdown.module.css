@@ -1,15 +1,20 @@
 @import "styles/theme.css";
 
-.inputRoot {
-    position: relative;
+.fieldRoot {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     border-radius: var(--radius-size);
-    min-height: 56px;
     background-color: var(--input-background);
     border: var(--border-template);
-    padding-block: var(--input-root-block-padding);
+    min-height: 56px;
+    padding-block-start: var(--input-root-block-padding);
+}
+
+.inputRoot {
+    background-color: transparent;
+    border-bottom: 1px solid black;
+    display: flex;
+    position: relative;
 }
 
 .inputLabel {
@@ -22,104 +27,29 @@
 }
 
 .inputControl {
-    color: var(--text-color);
     background-color: transparent;
-    border-top-left-radius: var(--radius-size);
-    border-top-right-radius: var(--radius-size);
-    padding-block-start: 1.125rem;
-    margin-block-end: -0.25rem;
-    padding-inline: 0.5rem;
+    color: var(--text-color);
+    cursor: pointer;
+    flex: 1;
     font-size: 1.5rem;
-    border-bottom: var(--border-template);
+    padding-block-start: 1rem;
+    padding-inline: 0.5rem;
+    z-index: 10;
 }
 
-
-.select {
-    width: 100%;
-    border-radius: 6px;
-    line-height: 1.75rem;
-    border: 1px solid transparent;
-    font-size: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    height: 3rem;
-    margin: 0;
-    outline: 0;
-    font-family: inherit;
-    cursor: default;
-    -webkit-user-select: none;
-    user-select: none;
-
-    @media (hover: hover) {
-        &:hover {
-            background-color: #707070;
-        }
-    }
-
-    &[data-popup-open] {
-        background-color: #242424;
-    }
-
-    &:focus-visible {
-        outline: 2px solid darkblue;
-        outline-offset: -1px;
-    }
-}
-
-.Input {
-    box-sizing: border-box;
-    padding-left: 0.875rem;
-    padding-right: calc(0.5rem + 1.5rem);
-    margin: 0;
-    border: 1px solid var(--color-gray-200);
-    width: 16rem;
-    height: 2.5rem;
-    border-radius: 0.375rem;
-    font-family: inherit;
-    font-size: 1rem;
-    background-color: canvas;
-    color: var(--color-gray-900);
-
-    &:focus {
-        outline: 2px solid var(--color-blue);
-        outline-offset: -1px;
-    }
-}
-
-.Label {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    font-weight: 500;
-    color: var(--color-gray-900);
-    position: relative;
-}
-
-.InputWrapper {
-    position: relative;
-
-    &:has(.Clear) .Input {
-        padding-right: calc(0.5rem + 1.5rem * 2);
-    }
-}
-
-.ActionButtons {
-    box-sizing: border-box;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    bottom: 0;
-    height: 2.5rem;
-    right: 0.5rem;
-    border-radius: 0.25rem;
-    border: none;
-    color: var(--color-gray-600);
+.inputControl::placeholder {
     padding: 0;
+}
+
+.inputActions {
+    display: flex;
+    align-items: center;
+    margin-block-start: 0.375rem;
+    padding-inline-end: 0.5rem;
+}
+
+.fieldError {
+    height: 0.75rem;
 }
 
 .Trigger,
@@ -128,36 +58,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1.5rem;
-    height: 2.5rem;
-    color: var(--color-gray-600);
-    border: none;
-    padding: 0;
+    width: 1.75rem;
+    height: 1.75rem;
     border-radius: 0.25rem;
     background: none;
+    border: none;
 }
 
 .ClearIcon,
 .TriggerIcon {
-    width: 1rem;
-    height: 1rem;
-}
-
-.Positioner {
-    outline: 0;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .Popup {
     box-sizing: border-box;
     border-radius: 0.375rem;
-    background-color: canvas;
+    background-color: lightslategray;
     color: var(--color-gray-900);
-    width: var(--anchor-width);
     max-height: 23rem;
-    max-width: var(--available-width);
     transition: opacity 0.1s,
     transform 0.1s;
-    transform-origin: var(--transform-origin);
+    border: chartreuse 3px solid;
 
     &[data-starting-style],
     &[data-ending-style] {
@@ -184,7 +106,7 @@
     padding-block: 0.5rem;
     scroll-padding-block: 0.5rem;
     outline: 0;
-    max-height: min(23rem, var(--available-height));
+    /*max-height: min(23rem, var(--available-height));*/
 
     &[data-empty] {
         padding: 0;
@@ -202,19 +124,19 @@
     display: grid;
     gap: 0.5rem;
     align-items: center;
-    grid-template-columns: 0.75rem 1fr;
+    grid-template-columns: 1.75rem 1fr;
     font-size: 1rem;
-    line-height: 1rem;
+    line-height: 1.25rem;
 
     &[data-highlighted] {
-        z-index: 0;
+        z-index: 5;
         position: relative;
-        color: var(--color-gray-50);
+        color: red;
     }
 
     &[data-highlighted]::before {
         content: '';
-        z-index: -1;
+        z-index: 2;
         position: absolute;
         inset-block: 0;
         inset-inline: 0.5rem;
@@ -233,8 +155,8 @@
 
 .ItemIndicatorIcon {
     display: block;
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
 .Empty:not(:empty) {
@@ -252,9 +174,9 @@
     --color-blue: oklch(45% 50% 264deg);
     --color-red: oklch(50% 55% 31deg);
 
-    --color-gray-50: oklch(98.42% 0.0034 247.86deg);
+    --color-gray-50: oklch(98% 0.25% 264deg);
     --color-gray-100: oklch(12% 9.5% 264deg / 5%);
-    --color-gray-200: oklch(12% 9% 264deg / 8%);
+    --color-gray-200: oklch(12% 9% 264deg / 7%);
     --color-gray-300: oklch(12% 8.5% 264deg / 17%);
     --color-gray-400: oklch(12% 8% 264deg / 38%);
     --color-gray-500: oklch(12% 7.5% 264deg / 50%);
@@ -268,29 +190,29 @@
         --color-blue: oklch(69% 50% 264deg);
         --color-red: oklch(80% 55% 31deg);
 
-        --color-gray-50: oklch(17% 1% 264deg);
-        --color-gray-100: oklch(28% 3% 264deg / 65%);
-        --color-gray-200: oklch(31% 3% 264deg / 80%);
-        --color-gray-300: oklch(35% 3% 264deg / 80%);
-        --color-gray-400: oklch(47% 3.5% 264deg / 80%);
-        --color-gray-500: oklch(64% 4% 264deg / 80%);
-        --color-gray-600: oklch(82% 4% 264deg / 80%);
-        --color-gray-700: oklch(92% 4.5% 264deg / 80%);
-        --color-gray-800: oklch(93% 3.5% 264deg / 85%);
-        --color-gray-900: oklch(95% 2% 264deg / 90%);
-        --color-gray-950: oklch(94% 1.5% 264deg / 95%);
+        --color-gray-50: oklch(17% 0.25% 264deg);
+        --color-gray-100: oklch(28% 0.75% 264deg / 65%);
+        --color-gray-200: oklch(29% 0.75% 264deg / 80%);
+        --color-gray-300: oklch(35% 0.75% 264deg / 80%);
+        --color-gray-400: oklch(47% 0.875% 264deg / 80%);
+        --color-gray-500: oklch(64% 1% 264deg / 80%);
+        --color-gray-600: oklch(82% 1% 264deg / 80%);
+        --color-gray-700: oklch(92% 1.125% 264deg / 80%);
+        --color-gray-800: oklch(93% 0.875% 264deg / 85%);
+        --color-gray-900: oklch(95% 0.5% 264deg / 90%);
+        --color-gray-950: oklch(94% 0.375% 264deg / 95%);
     }
 }
 
 .inputControl:focus ~ .inputLabel,
-.inputControl[value=""]:focus ~ .inputLabel {
+.inputControl:not(:placeholder-shown) ~ .inputLabel {
     animation: inputLabelFocus 170ms linear;
     animation-fill-mode: forwards;
 }
 
 
-.inputControl:not(:focus):invalid ~ .inputLabel,
-.inputControl[data-invalid] ~ .inputLabel {
+.inputControl:not(:focus):placeholder-shown ~ .inputLabel
+{
     animation: inputLabelBlur 170ms linear;
     animation-fill-mode: forwards;
 }

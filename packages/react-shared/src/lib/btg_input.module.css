@@ -13,7 +13,7 @@ input {
     min-height: 56px;
     background-color: var(--input-background);
     border: var(--border-template);
-    padding-block: var(--input-root-block-padding);
+    padding-block-start: var(--input-root-block-padding);
 }
 
 .inputLabel {
@@ -33,7 +33,7 @@ input {
     border-top-right-radius: var(--radius-size);
     line-height: 1rem;
     padding-block-start: 1.125rem;
-    margin-block-end: -0.25rem;
+    /*margin-block-end: -0.25rem;*/
     padding-inline: 0.5rem;
     font-size: 1.5rem;
     border-bottom: var(--border-template);
@@ -85,4 +85,10 @@ input {
         font-size: 1.5rem;
         opacity: 1.0;
     }
+}
+
+.fieldError{
+    margin: 0;
+    padding: 0;
+    display: block;
 }

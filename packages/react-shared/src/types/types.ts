@@ -74,3 +74,26 @@ export type FormStructure = {
 };
 
 export type FormNode = FieldNode | SectionNode;
+
+export type Path<T> = T extends object
+  ? {
+      [K in keyof T]: K extends string
+        ? T[K] extends object
+          ? K | `${K}.${Path<T[K]>}`
+          : K
+        : never;
+    }[keyof T]
+  : never;
+
+export type PathValue<
+  T,
+  P extends Path<T>,
+> = P extends `${infer K}.${infer Rest}`
+  ? K extends keyof T
+    ? Rest extends Path<T[K]>
+      ? PathValue<T[K], Rest>
+      : never
+    : never
+  : P extends keyof T
+    ? T[P]
+    : never;

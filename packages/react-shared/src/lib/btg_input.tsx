@@ -8,7 +8,7 @@ import {
   memo,
   type ReactElement,
   type Ref,
-  useCallback
+  useCallback,
 } from 'react';
 import type { BtgInputStyles } from '../types/types';
 import styles from './btg_input.module.css';
@@ -75,11 +75,13 @@ const BtgInputImplementation = memo(
         >
           {label}
         </Field.Label>
-        <BtgError
-          touched={touched}
-          error={error}
-          style={StyleOverrides?.Error}
-        />
+        <Field.Error match={true} className={styles['fieldError']}>
+          <BtgError
+            touched={touched}
+            error={error}
+            style={StyleOverrides?.Error}
+          />
+        </Field.Error>
       </Field.Root>
     );
   }),
