@@ -34,10 +34,8 @@ export const BtgDropdown = memo(function <T, Name extends Path<T>>({
   const { value, onBlur } = formik.getFieldProps<PathValue<T, Name>>(name);
 
   const error: OptionType | string = getIn(formik.errors, name);
-  if (name === 'person.favoriteColor')
-    console.log('dropdown errors: ', formik.errors);
   const touched: boolean | undefined = getIn(formik.touched, name);
-  if (name === 'person.favoriteColor') console.log(touched, error);
+
   const itemArray: OptionType[] = Array.isArray(items) ? items : [];
   const passedOnChange = props.onValueChange;
 
@@ -47,7 +45,7 @@ export const BtgDropdown = memo(function <T, Name extends Path<T>>({
       event: Combobox.Root.ChangeEventDetails,
     ): Promise<void> => {
       if (name === 'person.favoriteColor') console.log(value);
-      await formik.setFieldValue(name, value as PathValue<T, Name>);
+      await formik.setFieldValue(name, value as PathValue<T, Name>, true);
       passedOnChange && passedOnChange(value as PathValue<T, Name>, event);
     },
     [formik, name, passedOnChange],

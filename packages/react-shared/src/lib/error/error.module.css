@@ -1,15 +1,18 @@
+@import "../styles/theme.css";
+
 .inputError {
-    height: 0.75rem;
+    min-height: 0.83rem;
+    height: fit-content;
     display: flex;
     margin-block-start: 0.0675rem;
-    margin-inline-start: 0.75rem;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    margin-inline-start: 0.3175rem;
+    border-bottom-left-radius: var(--radius-size);
+    border-bottom-right-radius: var(--radius-size);
 }
 
-
 .error {
-    width: 100%;
-    color: #D32F2F;
+    color: var(--error-color);
     font-size: 0.675rem;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }

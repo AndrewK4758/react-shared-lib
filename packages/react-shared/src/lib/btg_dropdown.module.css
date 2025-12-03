@@ -7,7 +7,7 @@
     background-color: var(--input-background);
     border: var(--border-template);
     min-height: 56px;
-    padding-block-start: var(--input-root-block-padding);
+    padding-block: var(--input-root-block-padding);
 }
 
 .inputRoot {
@@ -49,7 +49,8 @@
 }
 
 .fieldError {
-    height: 0.75rem;
+    min-height: 0.75rem;
+    height: fit-content;
 }
 
 .Trigger,
@@ -73,13 +74,12 @@
 
 .Popup {
     box-sizing: border-box;
-    border-radius: 0.375rem;
-    background-color: lightslategray;
-    color: var(--color-gray-900);
-    max-height: 23rem;
-    transition: opacity 0.1s,
-    transform 0.1s;
-    border: chartreuse 3px solid;
+    border-radius: var(--radius-size);
+    background-color: var(--dropdown-popup-bg);
+    /*color: var(--color-gray-900);*/
+    /*max-height: 23rem;*/
+    /*transition: opacity 0.1s,*/
+    /*transform 0.1s;*/
 
     &[data-starting-style],
     &[data-ending-style] {

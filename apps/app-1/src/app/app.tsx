@@ -103,9 +103,7 @@ export function App() {
           'Content-Type': 'application/json',
         },
       };
-      const postResp = await fetch('http://localhost:4201/practices', options);
-
-      console.log(await postResp.json());
+      await fetch('http://localhost:4201/practices', options);
     },
     validateOnBlur: true,
     validateOnChange: true,
@@ -124,9 +122,6 @@ export function App() {
     formik.handleSubmit(event.currentTarget.values);
   };
 
-  console.log('VALUES', formik.values);
-  console.log('TOUCHED', formik.touched);
-  console.log('ERRORS', formik.errors);
   return (
     <div
       style={{

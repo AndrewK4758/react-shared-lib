@@ -3,6 +3,8 @@
     --label-color: oklch(17.3% 0 0);
     --text-color: oklch(26.03% 0 0);
     --input-background: transparent;
+    --error-color: oklch(0.568 0.2002 26.41);
+    --dropdown-popup-bg: oklch(0.8294 0.0125 247.98);
 
     /*Shapes*/
     --radius-size: 6px;
