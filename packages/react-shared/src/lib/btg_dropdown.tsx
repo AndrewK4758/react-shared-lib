@@ -8,14 +8,16 @@ import type {
   PathValue,
 } from '../types/types';
 import styles from './btg_dropdown.module.css';
-import { Combobox } from '@base-ui-components/react/combobox';
-import { Field } from '@base-ui-components/react/field';
+import { Combobox } from '@base-ui/react/combobox';
+import { Field } from '@base-ui/react/field';
 import BtgError from './error/error';
 
 type BaseComboboxRawProps = ComponentProps<typeof Combobox.Root>;
 
-interface BtgDropDownProps<T, Name extends Path<T>>
-  extends BaseComboboxRawProps {
+interface BtgDropDownProps<
+  T,
+  Name extends Path<T>,
+> extends BaseComboboxRawProps {
   name: Name;
   label: string;
   formik: FormikProps<T>;
@@ -44,7 +46,6 @@ export const BtgDropdown = memo(function <T, Name extends Path<T>>({
       value: unknown,
       event: Combobox.Root.ChangeEventDetails,
     ): Promise<void> => {
-      if (name === 'person.favoriteColor') console.log(value);
       await formik.setFieldValue(name, value as PathValue<T, Name>, true);
       passedOnChange && passedOnChange(value as PathValue<T, Name>, event);
     },

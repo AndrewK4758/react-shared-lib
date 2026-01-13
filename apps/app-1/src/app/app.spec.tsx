@@ -1,26 +1,19 @@
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import Routes from './routes';
 
-import App from './app';
+const router = createBrowserRouter(Routes);
 
 describe('App', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
-    );
+    const { baseElement } = render(<RouterProvider router={router} />);
     expect(baseElement).toBeTruthy();
   });
 
   it('should have a greeting as the title', () => {
-    const { getAllByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
-    );
+    const { getAllByText } = render(<RouterProvider router={router} />);
     expect(
-      getAllByText(new RegExp('Welcome app-1', 'gi')).length > 0,
+      getAllByText(new RegExp('LAYOUT ELEMENT', 'i')).length > 0,
     ).toBeTruthy();
   });
 });

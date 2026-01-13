@@ -1,4 +1,4 @@
-import { Field } from '@base-ui-components/react/field';
+import { Field } from '@base-ui/react/field';
 import type { FormikProps } from 'formik/dist/types';
 import {
   type ChangeEvent,
@@ -8,15 +8,16 @@ import {
   memo,
   type ReactElement,
   type Ref,
-  useCallback,
+  useCallback
 } from 'react';
 import type { BtgInputStyles } from '../types/types';
 import styles from './btg_input.module.css';
 import BtgError from './error/error';
 import { getIn } from 'formik';
 
-interface BtgInputProps<T>
-  extends ComponentPropsWithRef<Exclude<'input', 'style'>> {
+interface BtgInputProps<T> extends ComponentPropsWithRef<
+  Exclude<'input', 'style'>
+> {
   label: string;
   name: Extract<keyof T, string>;
   formik: FormikProps<T>;
@@ -48,7 +49,6 @@ const BtgInputImplementation = memo(
       (event: FocusEvent<HTMLInputElement>) => {
         onBlur(event);
         passedOnBlur && passedOnBlur(event);
-        console.log('blur for: ', event.currentTarget.name);
       },
       [onBlur, passedOnBlur],
     );

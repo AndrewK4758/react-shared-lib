@@ -1,12 +1,11 @@
 import { Outlet, type RouteObject } from 'react-router';
-// import formStructure from '../assets/form_structure.json';
 import type { FormStructure } from '@btg/shared-ui';
 import styles from './app.module.css';
 import App from './app';
 
 /**
  *
- * Add more types and properties to the type/objejct combo
+ * Add more types and properties to the type/object combo
  */
 
 export type FormikFormProps = {
@@ -81,7 +80,7 @@ export default [
           const formStructure = fetch(
             'http://localhost:4201/form-structure',
           ).then((resp) => resp.json()) as Promise<FormStructure>;
-          console.log(await formStructure);
+
           const selectValues = {
             favoriteColor: [
               { label: 'Red', value: 0 },
@@ -106,7 +105,7 @@ export default [
             ],
           };
 
-          return Promise.all([pretendData, formStructure, selectValues]);
+          return await Promise.all([pretendData, formStructure, selectValues]);
         },
       },
     ],

@@ -1,4 +1,4 @@
-import { Fieldset } from '@base-ui-components/react/fieldset';
+import { Fieldset } from '@base-ui/react/fieldset';
 import type { HTMLAttributes, ReactElement } from 'react';
 import type { BtgFieldsetStyles } from '../types/types';
 import styles from './btg_fieldset.module.css';

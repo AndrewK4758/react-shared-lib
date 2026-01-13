@@ -26,11 +26,7 @@ export default defineConfig(() => ({
     enableNativePlugin: true,
   },
   optimizeDeps: {
-    include: [
-      '@base-ui-components/react',
-      '@base-ui-components/utils',
-      '@base-ui-components/react/combobox',
-    ],
+    include: ['@base-ui/react', '@base-ui/utils', '@base-ui/react/combobox'],
   },
   // Uncomment this if you are using workers.
   // worker: {
@@ -63,9 +59,9 @@ export default defineConfig(() => ({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        '@base-ui-components/react/select',
-        '@base-ui-components/react/combobox',
-        '@base-ui-components/utils',
+        '@base-ui/react/select',
+        '@base-ui/react/combobox',
+        '@base-ui/utils',
         'formik',
       ],
     },
