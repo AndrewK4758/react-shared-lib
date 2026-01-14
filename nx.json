@@ -70,6 +70,12 @@
   "targetDefaults": {
     "test": {
       "dependsOn": ["^build"]
+    },
+    "generate-types": {
+      "dependsOn": ["dotnet-crud-api:build"],
+      "cache": true,
+      "inputs": ["{projectRoot}/openapi.json"],
+      "outputs": ["{workspaceRoot}/packages/react-shared/src/api/generated-types.ts"]
     }
   },
   "release": {

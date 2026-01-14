@@ -16,7 +16,11 @@
     "moduleResolution": "bundler",
     "target": "esnext",
     "resolveJsonModule": true,
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@btg/shared-ui": ["../../packages/react-shared/src/index.ts"],
+      "@btg/shared-ui/*": ["../../packages/react-shared/src/*"]
+    }
   },
   "exclude": [
     "out-tsc",

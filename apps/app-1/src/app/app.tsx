@@ -1,4 +1,6 @@
 import {
+  apiClient,
+  type ApiPractice,
   BtgFieldset,
   BtgRenderTree,
   type FormStructure,
@@ -12,6 +14,31 @@ import { useRouteLoaderData } from 'react-router';
 import styles from './app.module.css';
 import type { FormikFormProps } from './routes';
 import * as Yup from 'yup';
+
+/**
+ * Transform form values (with dropdown objects) to API format (with string values)
+ */
+function transformFormToApi(values: FormikFormProps): ApiPractice {
+  return {
+    person: {
+      id: values.person.id,
+      name: values.person.name,
+      nickname: values.person.nickname,
+      favoriteColor: values.person.favoriteColor.label,
+      family: values.person.family,
+    },
+    place: {
+      address: values.place.address,
+      city: values.place.city,
+      state: values.place.state.label,
+      zip: values.place.zip,
+      car: {
+        make: values.place.car.make.label,
+        model: values.place.car.model.label,
+      },
+    },
+  };
+}
 
 export interface SelectValuesType {
   [key: string]: OptionType[];
@@ -89,21 +116,16 @@ const validationSchema: Yup.ObjectSchema<Yup.AnyObject, FormikFormProps> =
 
 export function App() {
   const [_, structure, dropdown] = useRouteLoaderData('app') as [
-    FormikFormProps[],
+    ApiPractice[],
     FormStructure,
     SelectValuesType,
   ];
   const formik = useFormik<FormikFormProps>({
     initialValues: initialValues,
     onSubmit: async (values) => {
-      const options: RequestInit = {
-        body: JSON.stringify(values),
-        method: 'post',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-      await fetch('http://localhost:4201/practices', options);
+      // Transform form values to API format before sending
+      const apiPayload = transformFormToApi(values);
+      await apiClient.post<ApiPractice>('/practices', apiPayload);
     },
     validateOnBlur: true,
     validateOnChange: true,

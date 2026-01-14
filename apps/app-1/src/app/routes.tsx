@@ -1,13 +1,21 @@
 import { Outlet, type RouteObject } from 'react-router';
-import type { FormStructure } from '@btg/shared-ui';
+import {
+  apiClient,
+  type ApiFamily,
+  type ApiPractice,
+  type FormStructure,
+  type OptionType,
+} from '@btg/shared-ui';
 import styles from './app.module.css';
 import App from './app';
 
-/**
- *
- * Add more types and properties to the type/object combo
- */
+type DropdownField = OptionType;
 
+/**
+ * Form types derived from API types, with dropdown fields adapted for form usage
+ * - API returns strings for dropdown fields
+ * - Forms use {label, value} objects for dropdown selections
+ */
 export type FormikFormProps = {
   newSection: {
     one: string;
@@ -18,22 +26,18 @@ export type FormikFormProps = {
     id: string;
     name: string;
     nickname: string;
-    favoriteColor: { label: string; value: number };
-    family: {
-      mom: string;
-      dad: string;
-      bro: string;
-      sis: string;
-    };
+    favoriteColor: DropdownField;
+    family: ApiFamily;
   };
+  // From ApiPlace, with state and car fields as dropdowns
   place: {
     address: string;
     city: string;
-    state: { label: string; value: number };
+    state: DropdownField;
     zip: string;
     car: {
-      make: { label: string; value: number };
-      model: { label: string; value: number };
+      make: DropdownField;
+      model: DropdownField;
       type: string;
     };
   };
@@ -74,12 +78,13 @@ export default [
         index: true,
         element: <App />,
         loader: async () => {
-          const pretendData = fetch('http://localhost:4201/practices').then(
-            (resp) => resp.json(),
-          ) as Promise<FormikFormProps[]>;
-          const formStructure = fetch(
-            'http://localhost:4201/form-structure',
-          ).then((resp) => resp.json()) as Promise<FormStructure>;
+          const practicesResponse =
+            await apiClient.get<ApiPractice[]>('/practices');
+          const structureResponse =
+            await apiClient.get<FormStructure>('/form-structure');
+
+          const pretendData = practicesResponse.data ?? [];
+          const formStructure = structureResponse.data ?? {};
 
           const selectValues = {
             favoriteColor: [
@@ -113,8 +118,8 @@ export default [
 ] as RouteObject[];
 
 export type StateAbbreviation = (typeof stateAbbreviations)[number];
-export const stateAbbreviations = [
-  { label: 'AL', value: 0 },
+export const stateAbbreviations: OptionType[] = [
+  { label: 'AL', value: 'AL' },
   { label: 'AK', value: 1 },
   { label: 'AZ', value: 2 },
   { label: 'AR', value: 3 },

@@ -1,0 +1,38 @@
+{
+  "name": "dotnet-crud-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/dotnet-crud-api",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet watch run",
+        "cwd": "{projectRoot}"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet build",
+        "cwd": "{projectRoot}"
+      },
+      "cache": true,
+      "inputs": ["{projectRoot}/**/*.cs", "{projectRoot}/*.csproj"],
+      "outputs": ["{projectRoot}/bin", "{projectRoot}/obj"]
+    },
+    "generate-openapi": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "commands": [
+          "curl -sf http://localhost:4201/openapi/v1.json -o packages/dotnet-crud-api/openapi.json || echo 'API must be running to generate OpenAPI spec'"
+        ],
+        "cwd": "{workspaceRoot}"
+      },
+      "cache": true,
+      "inputs": ["{projectRoot}/**/*.cs", "{projectRoot}/*.csproj"],
+      "outputs": ["{projectRoot}/openapi.json"]
+    }
+  }
+}
