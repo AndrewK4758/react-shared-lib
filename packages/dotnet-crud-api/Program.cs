@@ -3,7 +3,11 @@ using System.Threading.Tasks; // Added for Task
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using DotNetEnv;
 using PracticeData;
+
+// Load .env file if it exists
+Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +21,22 @@ builder.Services.AddSingleton<PracticeService>();
 builder.Services.AddCors();
 // --- END NEW ---
 
+// --- OpenAPI (Microsoft.AspNetCore.OpenApi) ---
+builder.Services.AddOpenApi(options =>
+{
+  options.AddDocumentTransformer((document, context, cancellationToken) =>
+  {
+    document.Info.Title = "BTG Practice API";
+    document.Info.Version = "v1";
+    document.Info.Description = "API for managing practice data";
+    return Task.CompletedTask;
+  });
+});
+
 var app = builder.Build();
+
+// Map OpenAPI endpoint at /openapi/v1.json
+app.MapOpenApi();
 
 // --- ENABLE CORS (UPDATED) ---
 // We will build the policy directly here instead of using a named policy.
@@ -100,8 +119,13 @@ app.MapGet("/form-structure", async (PracticeService service) =>
 });
 
 
-// Run the application on port 4201
-app.Run("http://localhost:4201");
+// Run the application using environment variables
+var apiHost = Environment.GetEnvironmentVariable("API_HOST") ?? "localhost";
+var apiPort = Environment.GetEnvironmentVariable("API_PORT") ?? "4201";
+var apiUrl = $"http://{apiHost}:{apiPort}";
+
+Console.WriteLine($"Starting API server at {apiUrl}");
+app.Run(apiUrl);
 
 
 // --- Seeding Method ---

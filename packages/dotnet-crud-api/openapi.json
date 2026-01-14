@@ -1,0 +1,249 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "BTG Practice API",
+    "description": "API for managing practice data",
+    "version": "v1"
+  },
+  "paths": {
+    "/practices": {
+      "get": {
+        "tags": [
+          "dotnet-crud-api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "dotnet-crud-api"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Practice"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/practices/{id}": {
+      "get": {
+        "tags": [
+          "dotnet-crud-api"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "dotnet-crud-api"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Practice"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "dotnet-crud-api"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/form-structure": {
+      "get": {
+        "tags": [
+          "dotnet-crud-api"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Car": {
+        "required": [
+          "make",
+          "model"
+        ],
+        "type": "object",
+        "properties": {
+          "make": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          }
+        }
+      },
+      "Family": {
+        "required": [
+          "mom",
+          "dad",
+          "bro",
+          "sis"
+        ],
+        "type": "object",
+        "properties": {
+          "mom": {
+            "type": "string"
+          },
+          "dad": {
+            "type": "string"
+          },
+          "bro": {
+            "type": "string"
+          },
+          "sis": {
+            "type": "string"
+          }
+        }
+      },
+      "Person": {
+        "required": [
+          "id",
+          "name",
+          "nickname",
+          "favoriteColor",
+          "family"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "nickname": {
+            "type": "string"
+          },
+          "favoriteColor": {
+            "type": "string"
+          },
+          "family": {
+            "$ref": "#/components/schemas/Family"
+          }
+        }
+      },
+      "Place": {
+        "required": [
+          "address",
+          "city",
+          "state",
+          "zip",
+          "car"
+        ],
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "zip": {
+            "type": "string"
+          },
+          "car": {
+            "$ref": "#/components/schemas/Car"
+          }
+        }
+      },
+      "Practice": {
+        "required": [
+          "person",
+          "place"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "person": {
+            "$ref": "#/components/schemas/Person"
+          },
+          "place": {
+            "$ref": "#/components/schemas/Place"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "dotnet-crud-api"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "shared-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/react-shared/src",
+  "targets": {
+    "generate-types": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["dotnet-crud-api:generate-openapi"],
+      "options": {
+        "command": "pnpm openapi-typescript packages/dotnet-crud-api/openapi.json -o packages/react-shared/src/api/generated-types.ts",
+        "cwd": "{workspaceRoot}"
+      },
+      "cache": true,
+      "inputs": [
+        "{workspaceRoot}/packages/dotnet-crud-api/openapi.json"
+      ],
+      "outputs": ["{projectRoot}/src/api/generated-types.ts"]
+    }
+  }
+}

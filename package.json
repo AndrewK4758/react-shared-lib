@@ -3,10 +3,21 @@
   "version": "0.0.0",
   "license": "MIT",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "dev": "nx run-many -t serve",
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test",
+    "lint": "nx run-many -t lint",
+    "api:serve": "nx serve dotnet-crud-api",
+    "api:build": "nx build dotnet-crud-api",
+    "api:generate-openapi": "cd packages/dotnet-crud-api && dotnet build && curl -s http://localhost:4201/openapi/v1.json -o openapi.json",
+    "generate:types": "pnpm openapi-typescript packages/dotnet-crud-api/openapi.json -o packages/react-shared/src/api/generated-types.ts",
+    "generate:api": "pnpm api:generate-openapi && pnpm generate:types"
+  },
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.28.5",
+    "openapi-typescript": "^7.6.1",
     "@babel/preset-react": "^7.28.5",
     "@base-ui/react": "1.0.0",
     "@eslint/js": "^9.39.2",
